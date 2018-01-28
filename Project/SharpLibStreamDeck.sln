@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing", "Samples\Drawing\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rainbow", "Samples\Rainbow\Rainbow.csproj", "{AA895BB3-EB57-4C20-8BA9-0AB0B09FF08E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{AE1EEE33-3149-4BD9-B065-276B727E1BA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC69188A-307D-4029-AA51-4F099E7AB00B} = {AE1EEE33-3149-4BD9-B065-276B727E1BA3}
+		{DBB06CB6-D076-439C-AD65-BB549490865C} = {AE1EEE33-3149-4BD9-B065-276B727E1BA3}
+		{AA895BB3-EB57-4C20-8BA9-0AB0B09FF08E} = {AE1EEE33-3149-4BD9-B065-276B727E1BA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03B43940-8608-482B-9ECB-325639FC7D22}
