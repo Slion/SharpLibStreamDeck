@@ -19,7 +19,7 @@ namespace SharpLib.StreamDeck.Examples.Austria
                 deck.SetBrightness(100);
 
                 //Send the bitmap informaton to the device
-                for (int i = 0; i < deck.NumberOfKeys; i++)
+                for (int i = 0; i < deck.KeyCount; i++)
                     deck.SetKeyBitmap(i, rowColors[i / 5]);
             }
         }

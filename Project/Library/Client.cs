@@ -1,5 +1,4 @@
 ﻿using HidLibrary;
-using SharpLib.StreamDeck.Exceptions;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -24,54 +23,47 @@ namespace SharpLib.StreamDeck
     {
 
         /// <summary>
-        /// Enumerates connected Stream Decks and returns the first one.
+        /// Open the first Stream Deck device we find.
         /// </summary>
-        /// <returns>The default <see cref="IStreamDeck"/> HID</returns>
-        /// <exception cref="SharpLib.StreamDeck.Exceptions.StreamDeckNotFoundException">Thrown when no Stream Deck is found</exception>
+        /// <exception cref="SharpLib.StreamDeck.NotFoundException">Thrown when no Stream Deck is found</exception>
         public void Open()
         {
             var dev = HidDevices.Enumerate(vendorId, productId).FirstOrDefault();
 
             if (dev == null)
-                throw new StreamDeckNotFoundException();
+                throw new NotFoundException();
 
             Open(dev);
         }
 
         /// <summary>
-        /// Get <see cref="IStreamDeck"/> with given <paramref name="devicePath"/>
+        /// Open the Stream Deck device at the given location.
         /// </summary>
-        /// <param name="devicePath"></param>
-        /// <returns><see cref="IStreamDeck"/> specified by <paramref name="devicePath"/></returns>
+        /// <exception cref="SharpLib.StreamDeck.NotFoundException">Thrown when no Stream Deck is found</exception>
         public void Open(string devicePath)
         {
             var dev = HidDevices.GetDevice(devicePath);
 
             if (dev == null)
-                throw new StreamDeckNotFoundException();
+                throw new NotFoundException();
 
             Open(dev);
         }
-    
 
 
-
-    /// <summary>
-    /// The number of keys present on the Stream Deck
-    /// </summary>
-    /// <remarks>
-    /// At the moment there is only a Stream Deck device with 5x3 keys.
-    /// But this may change in the future so please use this property in your
-    /// code / for-loops.
-    /// </remarks>
-    public int NumberOfKeys { get { return numOfKeys; } }
+        /// <summary>
+        /// The number of keys present on the Stream Deck
+        /// </summary>
+        /// 
+        /// TODO: Fetch this property from the device instead of having it hardcoded?
+        public int KeyCount { get { return numOfKeys; } }
 
         /// <summary>
         /// Is raised when a key is pressed
         /// </summary>
         public event EventHandler<KeyEventArgs> KeyPressed;
 
-        private HidDevice device;
+        private HidDevice iDevice;
         private byte[] keyStates = new byte[numOfKeys];
         private volatile bool disposed = false;
 
@@ -85,7 +77,7 @@ namespace SharpLib.StreamDeck
         internal const int vendorId = 0x0fd9;    //Elgato Systems GmbH
         internal const int productId = 0x0060;   //Stream Deck
 
-        private readonly Task[] backgroundTasks;
+        private readonly Task[] iTasks;
         private readonly CancellationTokenSource threadCancelSource = new CancellationTokenSource();
         private readonly KeyRepaintQueue qqq = new KeyRepaintQueue();
         private readonly object disposeLock = new object();
@@ -107,7 +99,7 @@ namespace SharpLib.StreamDeck
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
 
-        private static readonly byte[] showLogoMsg = new byte[] { 0x0B, 0x63 };
+        private static readonly byte[] KHidFeatureShowLogo = new byte[] { 0x0B, 0x63 };
 
         /// <summary>
         /// Size of the icon in pixels
@@ -132,7 +124,7 @@ namespace SharpLib.StreamDeck
             if (percent > 100) throw new ArgumentOutOfRangeException(nameof(percent));
             var buffer = new byte[] { 0x05, 0x55, 0xaa, 0xd1, 0x01, 0x64, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
             buffer[5] = percent;
-            device.WriteFeatureData(buffer);
+            iDevice.WriteFeatureData(buffer);
         }
 
 
@@ -163,46 +155,45 @@ namespace SharpLib.StreamDeck
                 disposed = true;
             }
 
-            if (device == null) return;
+            if (iDevice == null) return;
 
             threadCancelSource.Cancel();
-            Task.WaitAll(backgroundTasks);
+            Task.WaitAll(iTasks);
 
             ShowLogo();
 
-            device.CloseDevice();
-            device.Dispose();
-            device = null;
+            iDevice.CloseDevice();
+            iDevice.Dispose();
+            iDevice = null;
         }
 
         public Client()
         {
-            var numberOfTasks = NumberOfKeys;
-            backgroundTasks = new Task[numberOfTasks];
+            iTasks = new Task[KeyCount];
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="device"></param>
-        private void Open(HidDevice device)
+        /// <param name="aDevice"></param>
+        private void Open(HidDevice aDevice)
         {
-            if (device == null) throw new ArgumentNullException();
-            if (device.IsOpen) throw new NotSupportedException();
-            device.MonitorDeviceEvents = true;
-            device.ReadReport(ReadCallback);
-            device.OpenDevice(DeviceMode.Overlapped, DeviceMode.Overlapped, ShareMode.ShareRead | ShareMode.ShareWrite);
-            if (!device.IsOpen) throw new Exception("Device could not be opened");
-            this.device = device;
+            if (aDevice == null) throw new ArgumentNullException();
+            if (aDevice.IsOpen) throw new NotSupportedException();
+            aDevice.MonitorDeviceEvents = true;
+            aDevice.ReadReport(ReadCallback);
+            aDevice.OpenDevice(DeviceMode.Overlapped, DeviceMode.Overlapped, ShareMode.ShareRead | ShareMode.ShareWrite);
+            if (!aDevice.IsOpen) throw new Exception("Device could not be opened");
+            iDevice = aDevice;
 
             for (int i = 0; i < numOfKeys; i++)
             {
                 keyLocks[i] = new object();
             }
 
-            for (int i = 0; i < backgroundTasks.Count(); i++)
+            for (int i = 0; i < iTasks.Count(); i++)
             {
-                backgroundTasks[i] = Task.Factory.StartNew(() =>
+                iTasks[i] = Task.Factory.StartNew(() =>
                 {
                     var cancelToken = threadCancelSource.Token;
 
@@ -214,8 +205,8 @@ namespace SharpLib.StreamDeck
                         var id = nextBm.Item1;
                         lock (keyLocks[id])
                         {
-                            device.Write(GeneratePage1(id, nextBm.Item2));
-                            device.Write(GeneratePage2(id, nextBm.Item2));
+                            aDevice.Write(GeneratePage1(id, nextBm.Item2));
+                            aDevice.Write(GeneratePage2(id, nextBm.Item2));
                         }
                     }
                 }, TaskCreationOptions.LongRunning);
@@ -229,7 +220,7 @@ namespace SharpLib.StreamDeck
 
         private void ReadCallback(HidReport report)
         {
-            var _d = device;
+            var _d = iDevice;
             if (_d == null || disposed) return;
             ProcessNewStates(report.Data);
             _d.ReadReport(ReadCallback);
@@ -275,11 +266,11 @@ namespace SharpLib.StreamDeck
         }
 
         /// <summary>
-        /// Shows the Stream Deck logo (Fullscreen)
+        /// Display the Elgato Gaming logo on the connected Stream Deck.
         /// </summary>
         public void ShowLogo()
         {
-            device.WriteFeatureData(showLogoMsg);
+            iDevice.WriteFeatureData(KHidFeatureShowLogo);
         }
     }
 

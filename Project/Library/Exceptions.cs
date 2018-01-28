@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpLib.StreamDeck.Exceptions
+namespace SharpLib.StreamDeck
 {
     /// <summary>
     /// Base class for all StreamDeckSharp Exceptions
     /// </summary>
-    public abstract class StreamDeckException : Exception
+    public abstract class BaseException : Exception
     {
-        public StreamDeckException(string Message) : base(Message) { }
+        public BaseException(string Message) : base(Message) { }
     }
 
-    public class StreamDeckNotFoundException : StreamDeckException
+    public class NotFoundException : BaseException
     {
-        public StreamDeckNotFoundException() : base("Stream Deck not found.") { }
+        public NotFoundException() : base("Stream Deck not found.") { }
     }
 }

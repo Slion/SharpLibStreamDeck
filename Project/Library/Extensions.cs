@@ -35,7 +35,7 @@ namespace SharpLib.StreamDeck
         /// <param name="bitmap"></param>
         public static void SetKeyBitmap(this Client deck, KeyBitmap bitmap)
         {
-            for (int i = 0; i < deck.NumberOfKeys; i++)
+            for (int i = 0; i < deck.KeyCount; i++)
                 deck.SetKeyBitmap(i, bitmap.rawBitmapData);
         }
 
