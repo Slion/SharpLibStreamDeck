@@ -52,9 +52,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StreamDeckSharp\StreamDeckSharp.csproj">
+    <ProjectReference Include="..\Library\SharpLibStreamDeck.csproj">
       <Project>{d06ab787-766e-4b28-89c4-8d948070eb1c}</Project>
-      <Name>StreamDeckSharp</Name>
+      <Name>SharpLibStreamDeck</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
