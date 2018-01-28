@@ -12,7 +12,6 @@ namespace SharpLib.StreamDeck
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// The <see cref="IStreamDeck"/> interface is pretty basic to simplify implementation.
     /// This extension class adds some commonly used functions to make things simpler.
     /// </remarks>
     public static class Extensions

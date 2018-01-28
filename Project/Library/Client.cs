@@ -108,7 +108,7 @@ namespace SharpLib.StreamDeck
 
 
         /// <summary>
-        /// Sets the brightness for this <see cref="IStreamDeck"/>
+        /// Set Stream Deck display brightness.
         /// </summary>
         /// <param name="percent">Brightness in percent (0 - 100)</param>
         /// <remarks>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SharpLibStreamDeck</id>
+        <version>0.0.1</version>
+        <title>Elgato Gaming Stream Deck Library</title>
+        <authors>Christian Wischenbart
+          Stéphane Lenclud</authors>
+        <owners>Stéphane Lenclud</owners>
+        <licenseUrl>https://github.com/Slion/SharpLibStreamDeck/blob/master/LICENSE.md</licenseUrl>
+        <projectUrl>https://github.com/Slion/SharpLibStreamDeck</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Class library providing access to some Elgato Gaming Stream Deck functionalities.</description>
+        <releaseNotes>        
+        </releaseNotes>
+        <copyright>Christian Wischenbart
+        Stéphane Lenclud</copyright>
+        <language />
+        <tags>Elgato Gaming Stream Deck HID</tags>
+
+      <!--
+        <dependencies>
+            <dependency id="NETStandard.Library" version="1.6.1" />          
+            <dependency id="System.Security.Cryptography.Algorithms" version="4.3.0" />            
+            <dependency id="System.Xml.XmlSerializer" version="4.3.0" />          
+        </dependencies>
+          -->
+          
+      <!--
+    Not sure if we should use dependencies or explicit reference?
+    
+      <references>
+        <reference file="System.Net.Http.dll"/>
+        <reference file="SharpLibFritzBox.dll"/>
+      </references>
+      -->
+
+            
+    </metadata>
+    <files>
+        <file src="..\Project\Library\bin\Release\SharpLibStreamDeck.dll" target="lib\net461" />
+    </files>
+
+
+
+</package>
