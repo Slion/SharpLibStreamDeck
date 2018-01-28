@@ -32,7 +32,7 @@ namespace SharpLib.StreamDeck.Examples.Rainbow
             }
         }
 
-        private static void Deck_KeyPressed(object sender, StreamDeckKeyEventArgs e)
+        private static void Deck_KeyPressed(object sender, KeyEventArgs e)
         {
             var d = sender as Client;
             if (d == null) return;
@@ -40,7 +40,7 @@ namespace SharpLib.StreamDeck.Examples.Rainbow
             if (e.IsDown)
             {
                 rnd.NextBytes(rgbBuffer);
-                var randomColor = StreamDeckKeyBitmap.FromRGBColor(rgbBuffer[0], rgbBuffer[1], rgbBuffer[2]);
+                var randomColor = KeyBitmap.FromRGBColor(rgbBuffer[0], rgbBuffer[1], rgbBuffer[2]);
                 d.SetKeyBitmap(e.Key, randomColor);
             }
         }

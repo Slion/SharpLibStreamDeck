@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace SharpLib.StreamDeck
 {
-    public class StreamDeckKeyEventArgs : EventArgs
+    public class KeyEventArgs : EventArgs
     {
         public int Key { get; }
         public bool IsDown { get; }
 
-        public StreamDeckKeyEventArgs(int key, bool isDown)
+        public KeyEventArgs(int key, bool isDown)
         {
             Key = key;
             IsDown = isDown;

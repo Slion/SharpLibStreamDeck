@@ -15,7 +15,7 @@ namespace SharpLib.StreamDeck
     /// The <see cref="IStreamDeck"/> interface is pretty basic to simplify implementation.
     /// This extension class adds some commonly used functions to make things simpler.
     /// </remarks>
-    public static class StreamDeckExtensions
+    public static class Extensions
     {
         /// <summary>
         /// Sets a background image for a given key
@@ -23,7 +23,7 @@ namespace SharpLib.StreamDeck
         /// <param name="deck"></param>
         /// <param name="keyId"></param>
         /// <param name="bitmap"></param>
-        public static void SetKeyBitmap(this Client deck, int keyId, StreamDeckKeyBitmap bitmap)
+        public static void SetKeyBitmap(this Client deck, int keyId, KeyBitmap bitmap)
         {
             deck.SetKeyBitmap(keyId, bitmap.rawBitmapData);
         }
@@ -33,7 +33,7 @@ namespace SharpLib.StreamDeck
         /// </summary>
         /// <param name="deck"></param>
         /// <param name="bitmap"></param>
-        public static void SetKeyBitmap(this Client deck, StreamDeckKeyBitmap bitmap)
+        public static void SetKeyBitmap(this Client deck, KeyBitmap bitmap)
         {
             for (int i = 0; i < deck.NumberOfKeys; i++)
                 deck.SetKeyBitmap(i, bitmap.rawBitmapData);
@@ -46,7 +46,7 @@ namespace SharpLib.StreamDeck
         /// <param name="keyId"></param>
         public static void ClearKey(this Client deck, int keyId)
         {
-            deck.SetKeyBitmap(keyId, StreamDeckKeyBitmap.Black);
+            deck.SetKeyBitmap(keyId, KeyBitmap.Black);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace SharpLib.StreamDeck
         /// <param name="deck"></param>
         public static void ClearKeys(this Client deck)
         {
-            deck.SetKeyBitmap(StreamDeckKeyBitmap.Black);
+            deck.SetKeyBitmap(KeyBitmap.Black);
         }
     }
 }

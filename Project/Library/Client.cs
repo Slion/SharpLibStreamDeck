@@ -69,7 +69,7 @@ namespace SharpLib.StreamDeck
         /// <summary>
         /// Is raised when a key is pressed
         /// </summary>
-        public event EventHandler<StreamDeckKeyEventArgs> KeyPressed;
+        public event EventHandler<KeyEventArgs> KeyPressed;
 
         private HidDevice device;
         private byte[] keyStates = new byte[numOfKeys];
@@ -146,7 +146,7 @@ namespace SharpLib.StreamDeck
         /// dimensions used by StreamDeck 72x72 pixels and 3 channels (RGB) for each pixel. 72 x 72 x 3 = 15552.
         /// 
         /// The channels are in the order BGR and the pixel rows (stride) are in reverse order.
-        /// If you need some help try <see cref="StreamDeckKeyBitmap"/>
+        /// If you need some help try <see cref="KeyBitmap"/>
         /// </remarks>
         public void SetKeyBitmap(int keyId, byte[] bitmapData)
         {
@@ -244,7 +244,7 @@ namespace SharpLib.StreamDeck
             {
                 if (keyStates[i] != newStates[i])
                 {
-                    KeyPressed?.Invoke(this, new StreamDeckKeyEventArgs(i, newStates[i] != 0));
+                    KeyPressed?.Invoke(this, new KeyEventArgs(i, newStates[i] != 0));
                     keyStates[i] = newStates[i];
                 }
             }

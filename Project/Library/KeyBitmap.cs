@@ -12,7 +12,7 @@ namespace SharpLib.StreamDeck
     /// <summary>
     /// Represents a bitmap that can be used as key images
     /// </summary>
-    public class StreamDeckKeyBitmap
+    public class KeyBitmap
     {
         /// <summary>
         /// Solid black bitmap
@@ -20,8 +20,8 @@ namespace SharpLib.StreamDeck
         /// <remarks>
         /// If you need a black bitmap (for example to clear keys) use this property for better performance (in theory ^^)
         /// </remarks>
-        public static StreamDeckKeyBitmap Black { get { return black; } }
-        private static readonly StreamDeckKeyBitmap black = new StreamDeckKeyBitmap(null);
+        public static KeyBitmap Black { get { return black; } }
+        private static readonly KeyBitmap black = new KeyBitmap(null);
 
         internal readonly byte[] rawBitmapData;
 
@@ -34,7 +34,7 @@ namespace SharpLib.StreamDeck
             return (byte[])rawBitmapData.Clone();
         }
 
-        internal StreamDeckKeyBitmap(byte[] bitmapData)
+        internal KeyBitmap(byte[] bitmapData)
         {
             if (bitmapData != null)
             {
@@ -43,9 +43,9 @@ namespace SharpLib.StreamDeck
             }
         }
 
-        public static StreamDeckKeyBitmap FromRawBitmap(byte[] bitmapData)
+        public static KeyBitmap FromRawBitmap(byte[] bitmapData)
         {
-            return new StreamDeckKeyBitmap(bitmapData);
+            return new KeyBitmap(bitmapData);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace SharpLib.StreamDeck
         /// <param name="G">Green channel</param>
         /// <param name="B">Blue channel</param>
         /// <returns></returns>
-        public static StreamDeckKeyBitmap FromRGBColor(byte R, byte G, byte B)
+        public static KeyBitmap FromRGBColor(byte R, byte G, byte B)
         {
             //If everything is 0 (black) take a shortcut ;-)
             if (R == 0 && G == 0 && B == 0) return Black;
@@ -68,10 +68,10 @@ namespace SharpLib.StreamDeck
                 buffer[i + 2] = R;
             }
 
-            return new StreamDeckKeyBitmap(buffer);
+            return new KeyBitmap(buffer);
         }
 
-        public static StreamDeckKeyBitmap FromStream(Stream bitmapStream)
+        public static KeyBitmap FromStream(Stream bitmapStream)
         {
             using (Bitmap bitmap = (Bitmap)Image.FromStream(bitmapStream))
             {
@@ -79,7 +79,7 @@ namespace SharpLib.StreamDeck
             }
         }
 
-        public static StreamDeckKeyBitmap FromFile(string bitmapFile)
+        public static KeyBitmap FromFile(string bitmapFile)
         {
             using (Bitmap bitmap = (Bitmap)Image.FromFile(bitmapFile))
             {
@@ -87,7 +87,7 @@ namespace SharpLib.StreamDeck
             }
         }
 
-        internal static StreamDeckKeyBitmap FromDrawingBitmap(Bitmap bitmap)
+        internal static KeyBitmap FromDrawingBitmap(Bitmap bitmap)
         {
             if (bitmap.Width != Client.iconSize || bitmap.Height != Client.iconSize) throw new NotSupportedException("Unsupported bitmap dimensions");
 
@@ -139,7 +139,7 @@ namespace SharpLib.StreamDeck
                     }
                 }
 
-                return new StreamDeckKeyBitmap(managedRGB);
+                return new KeyBitmap(managedRGB);
             }
             finally
             {
