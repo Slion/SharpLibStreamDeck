@@ -21,6 +21,8 @@ namespace StreamDeckDemo
         protected Image image;
         protected Thread getImageThread;
 
+        private TableLayoutPanel iTableLayoutPanelStreamDeck;
+
         //Panel[] iKeyPanels;
 
         public FormMain()
@@ -40,6 +42,39 @@ namespace StreamDeckDemo
         {
             //iKeyPanels = new Panel[iClient.KeyCount];
 
+            SuspendLayout();
+
+            const int KKeyPaddingInPixels = 2;
+            const int KKeyBordersInPixels = KKeyPaddingInPixels * 2;
+            //
+            // Create table panel
+            //
+            iTableLayoutPanelStreamDeck = new TableLayoutPanel();
+            iTableLayoutPanelStreamDeck.Location = new Point(89, 58);
+            iTableLayoutPanelStreamDeck.Margin = new Padding(0);
+            int widthInPixels = iClient.ColumnCount * (iClient.KeyWidthInpixels + KKeyBordersInPixels);
+            int heightInPixels = iClient.RowCount * (iClient.KeyHeightInpixels + KKeyBordersInPixels);
+            iTableLayoutPanelStreamDeck.Size = new Size(widthInPixels, heightInPixels);
+
+            iTableLayoutPanelStreamDeck.BackColor = SystemColors.ControlDarkDark;
+            iTableLayoutPanelStreamDeck.ColumnCount = iClient.ColumnCount;
+            for (int i=0;i<iClient.ColumnCount;i++)
+            {
+                iTableLayoutPanelStreamDeck.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, iClient.KeyWidthInpixels+KKeyBordersInPixels));
+            }
+            
+            iTableLayoutPanelStreamDeck.RowCount = iClient.RowCount;
+            for (int i = 0; i < iClient.ColumnCount; i++)
+            {
+                iTableLayoutPanelStreamDeck.RowStyles.Add(new RowStyle(SizeType.Absolute, iClient.KeyHeightInpixels+KKeyBordersInPixels));
+            }
+
+            // Add table to our form
+            Controls.Add(iTableLayoutPanelStreamDeck);
+
+            //iTableLayoutPanelStreamDeck.TabIndex = 1;
+            //iTableLayoutPanelStreamDeck.Name = "iTableLayoutPanelStreamDeck";
+
             //For each row
             for (int j=0; j < iTableLayoutPanelStreamDeck.RowCount; j++)
             {
@@ -56,14 +91,14 @@ namespace StreamDeckDemo
                     label.AllowDrop = true;
                     label.BackColor = System.Drawing.Color.Transparent;
                     label.Location = new System.Drawing.Point(0, 0);
-                    label.Margin = new System.Windows.Forms.Padding(0);
+                    label.Margin = new Padding(0);
                     //label.Name = "label1";
                     label.Size = new System.Drawing.Size(72, 72);
                     //label.TabIndex = 19;
                     label.Text = panelIndex.ToString();
                     label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-                    label.DragDrop += new System.Windows.Forms.DragEventHandler(label1_DragDrop);
-                    label.DragEnter += new System.Windows.Forms.DragEventHandler(label1_DragEnter);
+                    label.DragDrop += new DragEventHandler(label1_DragDrop);
+                    label.DragEnter += new DragEventHandler(label1_DragEnter);
                     // 
                     // Create picture box
                     // 
@@ -71,10 +106,10 @@ namespace StreamDeckDemo
                     pictureBox.Controls.Add(label);
                     pictureBox.BackColor = System.Drawing.SystemColors.Control;
                     pictureBox.Location = new System.Drawing.Point(0, 0);
-                    pictureBox.Margin = new System.Windows.Forms.Padding(2);
+                    pictureBox.Margin = new Padding(2);
                     //pictureBox1.Name = "pictureBox1";
                     pictureBox.Size = new System.Drawing.Size(72, 72);
-                    pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                    pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     //pictureBox1.TabIndex = 16;
                     pictureBox.TabStop = false;
                     //
@@ -82,7 +117,7 @@ namespace StreamDeckDemo
                     //
                     //panel.Controls.Add(pictureBox);
                     //panel.Location = new System.Drawing.Point(2, 154);
-                    //panel.Margin = new System.Windows.Forms.Padding(2);
+                    //panel.Margin = new Padding(2);
                     //panel.Size = new System.Drawing.Size(72, 72);
                     //panel.TabIndex = panelIndex;
 
@@ -90,6 +125,8 @@ namespace StreamDeckDemo
                     iTableLayoutPanelStreamDeck.Controls.Add(pictureBox, iTableLayoutPanelStreamDeck.ColumnCount-i-1, j);
                 }
             }
+
+            ResumeLayout(false);
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)

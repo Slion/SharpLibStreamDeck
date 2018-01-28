@@ -57,6 +57,10 @@ namespace SharpLib.StreamDeck
         /// 
         /// TODO: Fetch this property from the device instead of having it hardcoded?
         public int KeyCount { get { return numOfKeys; } }
+        public int RowCount { get { return 3; } }
+        public int ColumnCount { get { return 5; } }
+        public int KeyWidthInpixels { get { return 72; } }
+        public int KeyHeightInpixels { get { return 72; } }
 
         /// <summary>
         /// Is raised when a key is pressed
@@ -67,8 +71,8 @@ namespace SharpLib.StreamDeck
         private byte[] keyStates = new byte[numOfKeys];
         private volatile bool disposed = false;
 
-        internal const int numOfKeys = 15;
-        internal const int iconSize = 72;
+        internal const int numOfKeys = 15; // TODO: remove that
+        internal const int iconSize = 72;  // TODO: remove that
         internal const int rawBitmapDataLength = iconSize * iconSize * 3;
         internal const int pagePacketSize = 8191;
         internal const int numFirstPagePixels = 2583;
