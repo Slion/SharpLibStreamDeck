@@ -87,7 +87,7 @@ namespace SharpLib.StreamDeck
             }
         }
 
-        internal static KeyBitmap FromDrawingBitmap(Bitmap bitmap)
+        public static KeyBitmap FromDrawingBitmap(Bitmap bitmap)
         {
             if (bitmap.Width != Client.iconSize || bitmap.Height != Client.iconSize) throw new NotSupportedException("Unsupported bitmap dimensions");
 
