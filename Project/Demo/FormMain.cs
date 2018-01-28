@@ -21,16 +21,75 @@ namespace StreamDeckDemo
         protected Image image;
         protected Thread getImageThread;
 
+        //Panel[] iKeyPanels;
+
         public FormMain()
         {
             InitializeComponent();
 
-            ((Control)pictureBox1).AllowDrop = true;
+            //((Control)pictureBox1).AllowDrop = true;
             //((Control)panel1).AllowDrop = true;
 
             iClient = new StreamDeck.Client();
             iClient.Open();
 
+            CreateKeyControls();
+        }
+
+        private void CreateKeyControls()
+        {
+            //iKeyPanels = new Panel[iClient.KeyCount];
+
+            //For each row
+            for (int j=0; j < iTableLayoutPanelStreamDeck.RowCount; j++)
+            {
+                //For each column
+                for (int i = 0; i < iTableLayoutPanelStreamDeck.ColumnCount; i++)
+                {
+                    int panelIndex = i + iTableLayoutPanelStreamDeck.ColumnCount * j;
+                    //Panel panel = iKeyPanels[panelIndex];
+
+                    // 
+                    // Create label
+                    // 
+                    Label label = new Label();
+                    label.AllowDrop = true;
+                    label.BackColor = System.Drawing.Color.Transparent;
+                    label.Location = new System.Drawing.Point(0, 0);
+                    label.Margin = new System.Windows.Forms.Padding(0);
+                    //label.Name = "label1";
+                    label.Size = new System.Drawing.Size(72, 72);
+                    //label.TabIndex = 19;
+                    label.Text = panelIndex.ToString();
+                    label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                    label.DragDrop += new System.Windows.Forms.DragEventHandler(label1_DragDrop);
+                    label.DragEnter += new System.Windows.Forms.DragEventHandler(label1_DragEnter);
+                    // 
+                    // Create picture box
+                    // 
+                    PictureBox pictureBox= new PictureBox();
+                    pictureBox.Controls.Add(label);
+                    pictureBox.BackColor = System.Drawing.SystemColors.Control;
+                    pictureBox.Location = new System.Drawing.Point(0, 0);
+                    pictureBox.Margin = new System.Windows.Forms.Padding(2);
+                    //pictureBox1.Name = "pictureBox1";
+                    pictureBox.Size = new System.Drawing.Size(72, 72);
+                    pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                    //pictureBox1.TabIndex = 16;
+                    pictureBox.TabStop = false;
+                    //
+                    // Setup panel
+                    //
+                    //panel.Controls.Add(pictureBox);
+                    //panel.Location = new System.Drawing.Point(2, 154);
+                    //panel.Margin = new System.Windows.Forms.Padding(2);
+                    //panel.Size = new System.Drawing.Size(72, 72);
+                    //panel.TabIndex = panelIndex;
+
+                    //
+                    iTableLayoutPanelStreamDeck.Controls.Add(pictureBox, iTableLayoutPanelStreamDeck.ColumnCount-i-1, j);
+                }
+            }
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -70,11 +129,15 @@ namespace StreamDeckDemo
                     Application.DoEvents();
                     Thread.Sleep(0);
                 }
-                pictureBox1.Image = image;
-                Bitmap bitmap = new Bitmap(panel1.Width, panel1.Height);
-                panel1.DrawToBitmap(bitmap,panel1.ClientRectangle);
+
+                PictureBox pictureBox=(PictureBox)(((Label)sender).Parent);
+                pictureBox.Image = image;
+                Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+                pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
+
+                int keyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(pictureBox);
                 //iClient.SetKeyBitmap(1, StreamDeck.KeyBitmap.FromFile(path).CloneBitmapData());
-                iClient.SetKeyBitmap(0, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
+                iClient.SetKeyBitmap(keyIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
             }
         }
 
