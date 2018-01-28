@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StreamDeckSharp
+namespace SharpLib.StreamDeck
 {
     /// <summary>
     /// Represents a bitmap that can be used as key images
@@ -38,7 +38,7 @@ namespace StreamDeckSharp
         {
             if (bitmapData != null)
             {
-                if (bitmapData.Length != StreamDeckHID.rawBitmapDataLength) throw new NotSupportedException("Unsupported bitmap array length");
+                if (bitmapData.Length != Client.rawBitmapDataLength) throw new NotSupportedException("Unsupported bitmap array length");
                 this.rawBitmapData = bitmapData;
             }
         }
@@ -60,7 +60,7 @@ namespace StreamDeckSharp
             //If everything is 0 (black) take a shortcut ;-)
             if (R == 0 && G == 0 && B == 0) return Black;
 
-            var buffer = new byte[StreamDeckHID.rawBitmapDataLength];
+            var buffer = new byte[Client.rawBitmapDataLength];
             for (int i = 0; i < buffer.Length; i += 3)
             {
                 buffer[i + 0] = B;
@@ -89,13 +89,13 @@ namespace StreamDeckSharp
 
         internal static StreamDeckKeyBitmap FromDrawingBitmap(Bitmap bitmap)
         {
-            if (bitmap.Width != StreamDeckHID.iconSize || bitmap.Height != StreamDeckHID.iconSize) throw new NotSupportedException("Unsupported bitmap dimensions");
+            if (bitmap.Width != Client.iconSize || bitmap.Height != Client.iconSize) throw new NotSupportedException("Unsupported bitmap dimensions");
 
             BitmapData data = null;
             try
             {
                 data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, bitmap.PixelFormat);
-                var managedRGB = new byte[StreamDeckHID.rawBitmapDataLength];
+                var managedRGB = new byte[Client.rawBitmapDataLength];
 
                 unsafe
                 {
@@ -106,12 +106,12 @@ namespace StreamDeckSharp
                     //copying 90% of the code ;-)
                     if (data.PixelFormat == PixelFormat.Format24bppRgb)
                     {
-                        for (int y = 0; y < StreamDeckHID.iconSize; y++)
+                        for (int y = 0; y < Client.iconSize; y++)
                         {
-                            for (int x = 0; x < StreamDeckHID.iconSize; x++)
+                            for (int x = 0; x < Client.iconSize; x++)
                             {
                                 var ps = data.Stride * y + x * 3;
-                                var pt = StreamDeckHID.iconSize * 3 * (y + 1) - (x + 1) * 3;
+                                var pt = Client.iconSize * 3 * (y + 1) - (x + 1) * 3;
                                 managedRGB[pt + 0] = bdata[ps + 0];
                                 managedRGB[pt + 1] = bdata[ps + 1];
                                 managedRGB[pt + 2] = bdata[ps + 2];
@@ -120,12 +120,12 @@ namespace StreamDeckSharp
                     }
                     else if (data.PixelFormat == PixelFormat.Format32bppArgb)
                     {
-                        for (int y = 0; y < StreamDeckHID.iconSize; y++)
+                        for (int y = 0; y < Client.iconSize; y++)
                         {
-                            for (int x = 0; x < StreamDeckHID.iconSize; x++)
+                            for (int x = 0; x < Client.iconSize; x++)
                             {
                                 var ps = data.Stride * y + x * 4;
-                                var pt = StreamDeckHID.iconSize * 3 * (y + 1) - (x + 1) * 3;
+                                var pt = Client.iconSize * 3 * (y + 1) - (x + 1) * 3;
                                 double alpha = (double)bdata[ps + 3] / 255f;
                                 managedRGB[pt + 0] = (byte)Math.Round(bdata[ps + 0] * alpha);
                                 managedRGB[pt + 1] = (byte)Math.Round(bdata[ps + 1] * alpha);

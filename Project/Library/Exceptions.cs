@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StreamDeckSharp.Exceptions
+namespace SharpLib.StreamDeck.Exceptions
 {
     /// <summary>
     /// Base class for all StreamDeckSharp Exceptions

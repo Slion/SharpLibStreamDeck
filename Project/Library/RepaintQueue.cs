@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace StreamDeckSharp
+namespace SharpLib.StreamDeck
 {
     internal sealed class KeyRepaintQueue
     {
@@ -12,7 +12,7 @@ namespace StreamDeckSharp
         }
 
         private readonly Queue<int> keyQueue = new Queue<int>();
-        private readonly KeyBitmapHolder[] keyIndex = new KeyBitmapHolder[StreamDeckHID.numOfKeys];
+        private readonly KeyBitmapHolder[] keyIndex = new KeyBitmapHolder[Client.numOfKeys];
         private readonly object listLock = new object();
         private readonly SemaphoreSlim waiter = new SemaphoreSlim(0);
 

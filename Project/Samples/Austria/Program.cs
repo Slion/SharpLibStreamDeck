@@ -1,6 +1,6 @@
-﻿using StreamDeckSharp;
+﻿using SharpLib.StreamDeck;
 
-namespace StreamDeckSharp.Examples.Austria
+namespace SharpLib.StreamDeck.Examples.Austria
 {
     class Program
     {
@@ -12,8 +12,10 @@ namespace StreamDeckSharp.Examples.Austria
             var rowColors = new StreamDeckKeyBitmap[] { red, white, red };
 
             //Open the Stream Deck device
-            using (var deck = StreamDeck.FromHID())
+
+            using (Client deck = new Client())
             {
+                deck.Open();
                 deck.SetBrightness(100);
 
                 //Send the bitmap informaton to the device

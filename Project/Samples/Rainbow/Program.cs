@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StreamDeckSharp.Examples.Rainbow
+namespace SharpLib.StreamDeck.Examples.Rainbow
 {
     class Program
     {
@@ -17,8 +17,10 @@ namespace StreamDeckSharp.Examples.Rainbow
         {
             Console.CancelKeyPress += Console_CancelKeyPress;
          
-            using (var deck = StreamDeck.FromHID())
+            using (Client deck = new Client())
             {
+                deck.Open();
+
                 deck.SetBrightness(100);
 
                 Console.WriteLine("Connected. Now press some keys on the Stream Deck.");
@@ -32,7 +34,7 @@ namespace StreamDeckSharp.Examples.Rainbow
 
         private static void Deck_KeyPressed(object sender, StreamDeckKeyEventArgs e)
         {
-            var d = sender as IStreamDeck;
+            var d = sender as Client;
             if (d == null) return;
 
             if (e.IsDown)

@@ -4,8 +4,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Threading;
 using System.Windows.Controls;
+using SharpLib.StreamDeck;
 
-namespace StreamDeckSharp.Examples.Drawing
+namespace SharpLib.StreamDeck.Examples.Drawing
 {
     class Program
     {
@@ -13,8 +14,10 @@ namespace StreamDeckSharp.Examples.Drawing
         static void Main(string[] args)
         {
             //Open the Stream Deck device
-            using (var deck = StreamDeck.FromHID())
+            using (Client deck = new Client())
             {
+                deck.Open();
+
                 ConsoleWriteAndWait("Press any key to run System.Drawing example");
                 ExampleWithSystemDrawing(deck);
 
@@ -25,7 +28,7 @@ namespace StreamDeckSharp.Examples.Drawing
             }
         }
 
-        static void ExampleWithSystemDrawing(IStreamDeck deck)
+        static void ExampleWithSystemDrawing(Client deck)
         {
             //Create a key with lambda graphics
             var key = deck.CreateKeyFromGraphics(g =>
@@ -51,7 +54,7 @@ namespace StreamDeckSharp.Examples.Drawing
             deck.SetKeyBitmap(7, key);
         }
 
-        static void ExampleWithWpfElement(IStreamDeck deck)
+        static void ExampleWithWpfElement(Client deck)
         {
             var c = new Canvas();
             c.Width = deck.IconSize;
@@ -73,6 +76,7 @@ namespace StreamDeckSharp.Examples.Drawing
             deck.SetKeyBitmap(7, k);
         }
 
+        //
         static void ConsoleWriteAndWait(string text)
         {
             Console.WriteLine(text);

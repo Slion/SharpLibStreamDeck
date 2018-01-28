@@ -1,5 +1,5 @@
 ﻿using HidLibrary;
-using StreamDeckSharp.Exceptions;
+using SharpLib.StreamDeck.Exceptions;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -15,17 +15,60 @@ using System.Threading.Tasks;
 //Special thanks to Lange (Alex Van Camp) - https://github.com/Lange/node-elgato-stream-deck
 //The node-js implementation was the basis of this .NET C# implementation
 
-namespace StreamDeckSharp
+namespace SharpLib.StreamDeck
 {
     /// <summary>
     /// A (very simple) .NET Wrapper for the StreamDeck HID
     /// </summary>
-    internal sealed class StreamDeckHID : IStreamDeck
+    public class Client : IDisposable
     {
-        //At the moment Stream Deck has 15 keys. In the future there may be
-        //versions with more or less keys. You should use this property
-        //instead of a fixed number or custom const value.
-        public int NumberOfKeys { get { return numOfKeys; } }
+
+        /// <summary>
+        /// Enumerates connected Stream Decks and returns the first one.
+        /// </summary>
+        /// <returns>The default <see cref="IStreamDeck"/> HID</returns>
+        /// <exception cref="SharpLib.StreamDeck.Exceptions.StreamDeckNotFoundException">Thrown when no Stream Deck is found</exception>
+        public void Open()
+        {
+            var dev = HidDevices.Enumerate(vendorId, productId).FirstOrDefault();
+
+            if (dev == null)
+                throw new StreamDeckNotFoundException();
+
+            Open(dev);
+        }
+
+        /// <summary>
+        /// Get <see cref="IStreamDeck"/> with given <paramref name="devicePath"/>
+        /// </summary>
+        /// <param name="devicePath"></param>
+        /// <returns><see cref="IStreamDeck"/> specified by <paramref name="devicePath"/></returns>
+        public void Open(string devicePath)
+        {
+            var dev = HidDevices.GetDevice(devicePath);
+
+            if (dev == null)
+                throw new StreamDeckNotFoundException();
+
+            Open(dev);
+        }
+    
+
+
+
+    /// <summary>
+    /// The number of keys present on the Stream Deck
+    /// </summary>
+    /// <remarks>
+    /// At the moment there is only a Stream Deck device with 5x3 keys.
+    /// But this may change in the future so please use this property in your
+    /// code / for-loops.
+    /// </remarks>
+    public int NumberOfKeys { get { return numOfKeys; } }
+
+        /// <summary>
+        /// Is raised when a key is pressed
+        /// </summary>
         public event EventHandler<StreamDeckKeyEventArgs> KeyPressed;
 
         private HidDevice device;
@@ -66,8 +109,23 @@ namespace StreamDeckSharp
 
         private static readonly byte[] showLogoMsg = new byte[] { 0x0B, 0x63 };
 
+        /// <summary>
+        /// Size of the icon in pixels
+        /// </summary>
         public int IconSize { get => iconSize; }
 
+
+        /// <summary>
+        /// Sets the brightness for this <see cref="IStreamDeck"/>
+        /// </summary>
+        /// <param name="percent">Brightness in percent (0 - 100)</param>
+        /// <remarks>
+        /// The brightness on the device is controlled with PWM (https://en.wikipedia.org/wiki/Pulse-width_modulation).
+        /// This results in a non-linear correlation between set percentage and perceived brightness.
+        /// 
+        /// In a nutshell: changing from 10 - 30 results in a bigger change than 80 - 100 (barely visible change)
+        /// This effect should be compensated outside this library
+        /// </remarks>
         public void SetBrightness(byte percent)
         {
             VerifyNotDisposed();
@@ -77,6 +135,19 @@ namespace StreamDeckSharp
             device.WriteFeatureData(buffer);
         }
 
+
+        /// <summary>
+        /// Sets a background image for a given key
+        /// </summary>
+        /// <param name="keyId">Specifies which key the image will be applied on</param>
+        /// <param name="bitmapData">The raw bitmap pixel data. Details see remarks section. The key will be painted black if this value is null.</param>
+        /// <remarks>
+        /// The raw pixel format is a byte array of length 15552. This number is based on the image
+        /// dimensions used by StreamDeck 72x72 pixels and 3 channels (RGB) for each pixel. 72 x 72 x 3 = 15552.
+        /// 
+        /// The channels are in the order BGR and the pixel rows (stride) are in reverse order.
+        /// If you need some help try <see cref="StreamDeckKeyBitmap"/>
+        /// </remarks>
         public void SetKeyBitmap(int keyId, byte[] bitmapData)
         {
             VerifyNotDisposed();
@@ -104,7 +175,17 @@ namespace StreamDeckSharp
             device = null;
         }
 
-        internal StreamDeckHID(HidDevice device)
+        public Client()
+        {
+            var numberOfTasks = NumberOfKeys;
+            backgroundTasks = new Task[numberOfTasks];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="device"></param>
+        private void Open(HidDevice device)
         {
             if (device == null) throw new ArgumentNullException();
             if (device.IsOpen) throw new NotSupportedException();
@@ -119,9 +200,7 @@ namespace StreamDeckSharp
                 keyLocks[i] = new object();
             }
 
-            var numberOfTasks = NumberOfKeys;
-            backgroundTasks = new Task[numberOfTasks];
-            for (int i = 0; i < numberOfTasks; i++)
+            for (int i = 0; i < backgroundTasks.Count(); i++)
             {
                 backgroundTasks[i] = Task.Factory.StartNew(() =>
                 {
@@ -145,7 +224,7 @@ namespace StreamDeckSharp
 
         private void VerifyNotDisposed()
         {
-            if (disposed) throw new ObjectDisposedException(nameof(StreamDeckHID));
+            if (disposed) throw new ObjectDisposedException(nameof(Client));
         }
 
         private void ReadCallback(HidReport report)
@@ -195,6 +274,9 @@ namespace StreamDeckSharp
             return p2;
         }
 
+        /// <summary>
+        /// Shows the Stream Deck logo (Fullscreen)
+        /// </summary>
         public void ShowLogo()
         {
             device.WriteFeatureData(showLogoMsg);

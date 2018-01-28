@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace StreamDeckSharp
+namespace SharpLib.StreamDeck
 {
     public static class ExtensionsForWpf
     {
@@ -13,7 +13,7 @@ namespace StreamDeckSharp
         /// <param name="deck"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        public static byte[] CreateKeyFromWpfElement(this IStreamDeck deck, FrameworkElement e)
+        public static byte[] CreateKeyFromWpfElement(this Client deck, FrameworkElement e)
         {
             //Do WPF layout process manually (because the element is not a UI element)
             e.Measure(new Size(72, 72));

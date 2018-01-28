@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StreamDeckSharp
+namespace SharpLib.StreamDeck
 {
     public static class ExtensionsForSystemDrawing
     {
-        public static byte[] CreateKeyFromGraphics(this IStreamDeck deck, Action<Graphics> graphicsAction)
+        public static byte[] CreateKeyFromGraphics(this Client deck, Action<Graphics> graphicsAction)
         {
             using (var bmp = deck.CreateKeyBitmap())
             {
@@ -23,7 +23,7 @@ namespace StreamDeckSharp
             }
         }
 
-        private static byte[] GetStreamDeckDataFromBitmap(this IStreamDeck deck, Bitmap image)
+        private static byte[] GetStreamDeckDataFromBitmap(this Client deck, Bitmap image)
         {
             if (image == null) throw new ArgumentNullException(nameof(image));
             if (image.Width != deck.IconSize || image.Height != deck.IconSize) throw new ArgumentException("Bitmap size not supported");
@@ -61,7 +61,7 @@ namespace StreamDeckSharp
 
         }
 
-        private static Bitmap CreateKeyBitmap(this IStreamDeck deck)
+        private static Bitmap CreateKeyBitmap(this Client deck)
         {
             var img = new Bitmap(72, 72, PixelFormat.Format24bppRgb);
             return img;

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StreamDeckSharp
+namespace SharpLib.StreamDeck
 {
     /// <summary>
     /// </summary>
@@ -23,7 +23,7 @@ namespace StreamDeckSharp
         /// <param name="deck"></param>
         /// <param name="keyId"></param>
         /// <param name="bitmap"></param>
-        public static void SetKeyBitmap(this IStreamDeck deck, int keyId, StreamDeckKeyBitmap bitmap)
+        public static void SetKeyBitmap(this Client deck, int keyId, StreamDeckKeyBitmap bitmap)
         {
             deck.SetKeyBitmap(keyId, bitmap.rawBitmapData);
         }
@@ -33,9 +33,9 @@ namespace StreamDeckSharp
         /// </summary>
         /// <param name="deck"></param>
         /// <param name="bitmap"></param>
-        public static void SetKeyBitmap(this IStreamDeck deck, StreamDeckKeyBitmap bitmap)
+        public static void SetKeyBitmap(this Client deck, StreamDeckKeyBitmap bitmap)
         {
-            for (int i = 0; i < StreamDeckHID.numOfKeys; i++)
+            for (int i = 0; i < deck.NumberOfKeys; i++)
                 deck.SetKeyBitmap(i, bitmap.rawBitmapData);
         }
 
@@ -44,7 +44,7 @@ namespace StreamDeckSharp
         /// </summary>
         /// <param name="deck"></param>
         /// <param name="keyId"></param>
-        public static void ClearKey(this IStreamDeck deck, int keyId)
+        public static void ClearKey(this Client deck, int keyId)
         {
             deck.SetKeyBitmap(keyId, StreamDeckKeyBitmap.Black);
         }
@@ -53,7 +53,7 @@ namespace StreamDeckSharp
         /// Sets background to black for all given keys
         /// </summary>
         /// <param name="deck"></param>
-        public static void ClearKeys(this IStreamDeck deck)
+        public static void ClearKeys(this Client deck)
         {
             deck.SetKeyBitmap(StreamDeckKeyBitmap.Black);
         }
