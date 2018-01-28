@@ -68,9 +68,6 @@
     <Compile Include="StreamDeckKeyEventArgs.cs" />
     <Compile Include="ExtensionsForWpf.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
