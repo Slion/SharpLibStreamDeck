@@ -23,14 +23,9 @@ namespace StreamDeckDemo
 
         private TableLayoutPanel iTableLayoutPanelStreamDeck;
 
-        //Panel[] iKeyPanels;
-
         public FormMain()
         {
             InitializeComponent();
-
-            //((Control)pictureBox1).AllowDrop = true;
-            //((Control)panel1).AllowDrop = true;
 
             iClient = new StreamDeck.Client();
             iClient.Open();
@@ -111,7 +106,6 @@ namespace StreamDeckDemo
         private void CreateStreamDeckKeyControls(int aColumn, int aRow)
         {
             int panelIndex = aColumn + iTableLayoutPanelStreamDeck.ColumnCount * aRow;
-            //Panel panel = iKeyPanels[panelIndex];
 
             // 
             // Create label
@@ -126,8 +120,8 @@ namespace StreamDeckDemo
             //label.TabIndex = 19;
             label.Text = panelIndex.ToString();
             label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            label.DragDrop += new DragEventHandler(label1_DragDrop);
-            label.DragEnter += new DragEventHandler(label1_DragEnter);
+            label.DragDrop += new DragEventHandler(label_DragDrop);
+            label.DragEnter += new DragEventHandler(label_DragEnter);
             // 
             // Create picture box
             // 
@@ -141,14 +135,6 @@ namespace StreamDeckDemo
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             //pictureBox1.TabIndex = 16;
             pictureBox.TabStop = false;
-            //
-            // Setup panel
-            //
-            //panel.Controls.Add(pictureBox);
-            //panel.Location = new System.Drawing.Point(2, 154);
-            //panel.Margin = new Padding(2);
-            //panel.Size = new System.Drawing.Size(72, 72);
-            //panel.TabIndex = panelIndex;
 
             //
             iTableLayoutPanelStreamDeck.Controls.Add(pictureBox, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
@@ -162,7 +148,7 @@ namespace StreamDeckDemo
         }
 
 
-        private void label1_DragEnter(object sender, DragEventArgs e)
+        private void label_DragEnter(object sender, DragEventArgs e)
         {
             string filename;
             validData = GetFilename(out filename, e);
@@ -179,7 +165,7 @@ namespace StreamDeckDemo
             }
         }
 
-        private void label1_DragDrop(object sender, DragEventArgs e)
+        private void label_DragDrop(object sender, DragEventArgs e)
         {
             if (validData)
             {

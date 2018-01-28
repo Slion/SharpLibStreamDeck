@@ -2,7 +2,7 @@
 
 # SharpLibStreamDeck
 
-StreamDeckSharp is a simple (unofficial) .NET interface for the Stream Deck (https://www.elgato.com/de/gaming/stream-deck).
+SharpLibStreamDeck is a .NET library to interface with [Elgato Gaming Stream Deck].
 This project is not related to _Elgato Systems GmbH_ in any way.
 
 ## Quickstart
@@ -57,3 +57,6 @@ namespace StreamDeckSharp.Examples.Austria
 Here is what the "Rainbow" example looks like after pressing some keys
 
 ![Rainbow example photo](doc/images/rainbow_example.png?raw=true "Rainbow demo after pressing some keys")
+
+
+[Elgato Gaming Stream Deck]: https://www.elgato.com/de/gaming/stream-deck
