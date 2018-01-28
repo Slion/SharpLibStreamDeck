@@ -4,13 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FC69188A-307D-4029-AA51-4F099E7AB00B}</ProjectGuid>
+    <ProjectGuid>{DBB06CB6-D076-439C-AD65-BB549490865C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>StreamDeckSharp.Examples.Austria</RootNamespace>
-    <AssemblyName>StreamDeckSharp.Examples.Austria</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>StreamDeckSharp.Examples.Drawing</RootNamespace>
+    <AssemblyName>StreamDeckSharp.Examples.Drawing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,14 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -49,7 +52,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\SharpLibStreamDeck.csproj">
+    <ProjectReference Include="..\..\Library\SharpLibStreamDeck.csproj">
       <Project>{d06ab787-766e-4b28-89c4-8d948070eb1c}</Project>
       <Name>SharpLibStreamDeck</Name>
     </ProjectReference>
