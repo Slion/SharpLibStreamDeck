@@ -26,6 +26,7 @@ namespace StreamDeckDemo
             InitializeComponent();
 
             ((Control)pictureBox1).AllowDrop = true;
+            //((Control)panel1).AllowDrop = true;
 
             iClient = new StreamDeck.Client();
             iClient.Open();
@@ -43,7 +44,7 @@ namespace StreamDeckDemo
 
         }
 
-        private void pictureBox1_DragEnter(object sender, DragEventArgs e)
+        private void label1_DragEnter(object sender, DragEventArgs e)
         {
             string filename;
             validData = GetFilename(out filename, e);
@@ -60,7 +61,7 @@ namespace StreamDeckDemo
             }
         }
 
-        private void pictureBox1_DragDrop(object sender, DragEventArgs e)
+        private void label1_DragDrop(object sender, DragEventArgs e)
         {
             if (validData)
             {
@@ -70,8 +71,8 @@ namespace StreamDeckDemo
                     Thread.Sleep(0);
                 }
                 pictureBox1.Image = image;
-                Bitmap bitmap = new Bitmap(pictureBox1.Width,pictureBox1.Height);
-                pictureBox1.DrawToBitmap(bitmap,pictureBox1.ClientRectangle);
+                Bitmap bitmap = new Bitmap(panel1.Width, panel1.Height);
+                panel1.DrawToBitmap(bitmap,panel1.ClientRectangle);
                 //iClient.SetKeyBitmap(1, StreamDeck.KeyBitmap.FromFile(path).CloneBitmapData());
                 iClient.SetKeyBitmap(0, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
             }
