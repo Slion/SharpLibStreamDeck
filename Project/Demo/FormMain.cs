@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using StreamDeck = SharpLib.StreamDeck;
 using System.Configuration;
 using System.Runtime.Serialization;
+using CodeProject.Dialog;
 
 namespace StreamDeckDemo
 {
@@ -20,6 +21,13 @@ namespace StreamDeckDemo
     {
         StreamDeck.Client iClient;
         StreamDeck.Model iStreamDeckModel;
+
+        int iCurrentProfileIndex = 0;
+        int iCurrentKeyIndex = 0;
+
+        const int KKeyPaddingInPixels = 8;
+        const int KKeyBordersInPixels = KKeyPaddingInPixels * 2;
+
 
         private TableLayoutPanel iTableLayoutPanelStreamDeck;
 
@@ -47,10 +55,6 @@ namespace StreamDeckDemo
 
             CreateStreamDeckControls();
         }
-
-
-        const int KKeyPaddingInPixels = 2;
-        const int KKeyBordersInPixels = KKeyPaddingInPixels * 2;
 
         /// <summary>
         /// 
@@ -83,7 +87,7 @@ namespace StreamDeckDemo
             // Create table panel
             //
             iTableLayoutPanelStreamDeck = new TableLayoutPanel();
-            iTableLayoutPanelStreamDeck.Location = new Point(89, 58);
+            iTableLayoutPanelStreamDeck.Location = new Point(50, 50);
             iTableLayoutPanelStreamDeck.Margin = new Padding(0);
             int widthInPixels = iClient.ColumnCount * (iClient.KeyWidthInpixels + KKeyBordersInPixels);
             int heightInPixels = iClient.RowCount * (iClient.KeyHeightInpixels + KKeyBordersInPixels);
@@ -131,12 +135,15 @@ namespace StreamDeckDemo
             label.Margin = new Padding(0);
             //label.Name = "label1";
             label.Size = new System.Drawing.Size(72, 72);
-            //label.TabIndex = 19;
-            //label.Text = panelIndex.ToString();
+            //label.TabIndex = panelIndex;
+            //label.TabStop = true;
+            // Fetch our text from our model
             label.Text = iStreamDeckModel.Profiles[0].Keys[panelIndex].Text;
+            label.Font = iStreamDeckModel.Profiles[0].Keys[panelIndex].Font;
             label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             label.DragDrop += new DragEventHandler(KeyDragDrop);
             label.DragEnter += new DragEventHandler(KeyDragEnter);
+            label.Click += new EventHandler(KeyClick);
             // 
             // Create picture box
             // 
@@ -221,6 +228,22 @@ namespace StreamDeckDemo
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KeyClick(object sender, EventArgs e)
+        {
+            // Workout the index of the key that was just clicked
+            PictureBox pictureBox = (PictureBox)(((Label)sender).Parent);            
+            iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(pictureBox);
+            // Load that key into our editor
+            EditCurrentKey();
+        }
+
+
         /// <summary>
         /// Get drag event payload filename if any.
         /// </summary>
@@ -272,15 +295,83 @@ namespace StreamDeckDemo
         /// </summary>
         private void LoadModel()
         {
-            DataContractSerializer s = new DataContractSerializer(typeof(StreamDeck.Model));
-            using (FileStream fs = File.Open("stream-deck.xml", FileMode.Open))
-            //using (FileStream fs = File.Open(destFile, FileMode.Create))
+            try
             {
-                Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
-                iStreamDeckModel = (StreamDeck.Model)s.ReadObject(fs);
+                DataContractSerializer s = new DataContractSerializer(typeof(StreamDeck.Model));
+                using (FileStream fs = File.Open("stream-deck.xml", FileMode.Open))
+                //using (FileStream fs = File.Open(destFile, FileMode.Create))
+                {
+                    Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
+                    iStreamDeckModel = (StreamDeck.Model)s.ReadObject(fs);
+                }
+            }
+            catch
+            {
+                Trace.WriteLine("WARNING: Could not load model");
             }
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        void EditCurrentKey()
+        {
+            LoadKeyInEditor(iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]);
+        }
+
+        StreamDeck.Key CurrentKey { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
+        Label CurrentKeyLabel { get { return (Label)iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex].Controls[0]; } }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aKey"></param>
+        void LoadKeyInEditor(StreamDeck.Key aKey)
+        {
+            iTextBoxKeyEditor.Text = aKey.Text;
+            iTextBoxKeyEditor.Font = aKey.Font;
+            //iTextBoxKeyEditor.TextAlign = aKey.TextAlign;
+        }
+
+        private void iTextBoxKeyEditor_TextChanged(object sender, EventArgs e)
+        {
+            CurrentKey.Text = iTextBoxKeyEditor.Text;
+            CurrentKeyLabel.Text = iTextBoxKeyEditor.Text;
+        }
+
+        private void iButtonSave_Click(object sender, EventArgs e)
+        {
+            SaveModel();
+        }
+
+        private void iButtonFont_Click(object sender, EventArgs e)
+        {
+            //fontDialog.ShowColor = true;
+            //fontDialog.ShowApply = true;
+            iFontDialog.ShowEffects = true;
+            iFontDialog.Font = CurrentKeyLabel.Font;
+
+            //fontDialog.ShowHelp = true;
+
+            //fontDlg.MaxSize = 40;
+            //fontDlg.MinSize = 22;
+
+            //fontDialog.Parent = this;
+            //fontDialog.StartPosition = FormStartPosition.CenterParent;
+
+            //DlgBox.ShowDialog(fontDialog);
+
+            //if (fontDialog.ShowDialog(this) != DialogResult.Cancel)
+            if (DlgBox.ShowDialog(iFontDialog) != DialogResult.Cancel)
+            {
+                //Save font settings
+                CurrentKeyLabel.Font = iFontDialog.Font;
+                CurrentKey.Font = iFontDialog.Font;
+                iTextBoxKeyEditor.Font = iFontDialog.Font;
+                SaveModel();
+            }
+        }
     }
 }
