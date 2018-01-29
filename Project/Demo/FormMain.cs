@@ -320,7 +320,7 @@ namespace StreamDeckDemo
         }
 
         StreamDeck.Key CurrentKey { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
-        Label CurrentKeyLabel { get { return (Label)iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex].Controls[0]; } }
+        Label CurrentKeyLabel { get { return iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex] as Label; } }
         StreamDeck.Profile CurrentProfile { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex]; } }
 
         /// <summary>
@@ -356,30 +356,29 @@ namespace StreamDeckDemo
 
         private void iButtonFont_Click(object sender, EventArgs e)
         {
-            //fontDialog.ShowColor = true;
+            iFontDialog.ShowColor = true;
             //fontDialog.ShowApply = true;
             iFontDialog.ShowEffects = true;
             iFontDialog.Font = CurrentKeyLabel.Font;
+            iFontDialog.Color = CurrentKeyLabel.ForeColor;
 
-            //fontDialog.ShowHelp = true;
-
-            //fontDlg.MaxSize = 40;
-            //fontDlg.MinSize = 22;
-
-            //fontDialog.Parent = this;
-            //fontDialog.StartPosition = FormStartPosition.CenterParent;
-
-            //DlgBox.ShowDialog(fontDialog);
-
-            //if (fontDialog.ShowDialog(this) != DialogResult.Cancel)
             if (DlgBox.ShowDialog(iFontDialog) != DialogResult.Cancel)
             {
                 //Save font settings
                 CurrentKeyLabel.Font = iFontDialog.Font;
                 CurrentKey.Font = iFontDialog.Font;
+                CurrentKeyLabel.ForeColor = iFontDialog.Color;
+                CurrentKey.FontColor = iFontDialog.Color;
+
                 iTextBoxKeyEditor.Font = iFontDialog.Font;
-                SaveModel();
+                
+                SaveModelAndReload();
             }
+        }
+
+        private void iButtonFontColor_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void iButtonNewProfile_Click(object sender, EventArgs e)
@@ -468,6 +467,5 @@ namespace StreamDeckDemo
             // We had to delay this otherwise labels would not be rendered
             iComboBoxProfiles.SelectedIndex = 0;
         }
-
     }
 }

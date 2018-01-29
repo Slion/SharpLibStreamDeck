@@ -36,6 +36,8 @@
             this.iComboBoxProfiles = new System.Windows.Forms.ComboBox();
             this.iButtonNewProfile = new System.Windows.Forms.Button();
             this.iButtonDeleteProfile = new System.Windows.Forms.Button();
+            this.iColorDialog = new System.Windows.Forms.ColorDialog();
+            this.iButtonFontColor = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // iTextBoxKeyEditor
@@ -97,11 +99,22 @@
             this.iButtonDeleteProfile.UseVisualStyleBackColor = true;
             this.iButtonDeleteProfile.Click += new System.EventHandler(this.iButtonDeleteProfile_Click);
             // 
+            // iButtonFontColor
+            // 
+            this.iButtonFontColor.Location = new System.Drawing.Point(632, 364);
+            this.iButtonFontColor.Name = "iButtonFontColor";
+            this.iButtonFontColor.Size = new System.Drawing.Size(75, 23);
+            this.iButtonFontColor.TabIndex = 7;
+            this.iButtonFontColor.Text = "Font Color";
+            this.iButtonFontColor.UseVisualStyleBackColor = true;
+            this.iButtonFontColor.Click += new System.EventHandler(this.iButtonFontColor_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(715, 427);
+            this.Controls.Add(this.iButtonFontColor);
             this.Controls.Add(this.iButtonDeleteProfile);
             this.Controls.Add(this.iButtonNewProfile);
             this.Controls.Add(this.iComboBoxProfiles);
@@ -127,6 +140,8 @@
         private System.Windows.Forms.ComboBox iComboBoxProfiles;
         private System.Windows.Forms.Button iButtonNewProfile;
         private System.Windows.Forms.Button iButtonDeleteProfile;
+        private System.Windows.Forms.ColorDialog iColorDialog;
+        private System.Windows.Forms.Button iButtonFontColor;
     }
 }
 
