@@ -19,11 +19,6 @@ namespace StreamDeckDemo
     public partial class FormMain : Form
     {
         StreamDeck.Client iClient;
-        protected bool validData;
-        string path;
-        protected Image image;
-        protected Thread getImageThread;
-
         StreamDeck.Model iStreamDeckModel;
 
         private TableLayoutPanel iTableLayoutPanelStreamDeck;
@@ -62,7 +57,6 @@ namespace StreamDeckDemo
         /// </summary>
         private void CreateStreamDeckControls()
         {
-
             SuspendLayout();
             //
             CreateStreamDeckTableLayoutPanel();
@@ -141,8 +135,8 @@ namespace StreamDeckDemo
             //label.Text = panelIndex.ToString();
             label.Text = iStreamDeckModel.Profiles[0].Keys[panelIndex].Text;
             label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            label.DragDrop += new DragEventHandler(label_DragDrop);
-            label.DragEnter += new DragEventHandler(label_DragEnter);
+            label.DragDrop += new DragEventHandler(KeyDragDrop);
+            label.DragEnter += new DragEventHandler(KeyDragEnter);
             // 
             // Create picture box
             // 
@@ -169,81 +163,90 @@ namespace StreamDeckDemo
             iClient = null;
         }
 
-
-        private void label_DragEnter(object sender, DragEventArgs e)
+        /// <summary>
+        /// Event triggered when the user drag some stuff over our control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KeyDragEnter(object sender, DragEventArgs e)
         {
+            // Just check if our payload is supported and give visual feeadback accordingly
             string filename;
-            validData = GetFilename(out filename, e);
-            if (validData)
+            bool supported = GetDragPayloadFilename(out filename, e);
+            if (supported)
             {
-                path = filename;
-                getImageThread = new Thread(new ThreadStart(LoadImage));
-                getImageThread.Start();
+                // Supported payload set pointer cursor to "copy" type.
                 e.Effect = DragDropEffects.Copy;
             }
             else
             {
+                // Payload not supported set pointer cursor to "none" type.
                 e.Effect = DragDropEffects.None;
             }
         }
 
-        private void label_DragDrop(object sender, DragEventArgs e)
-        {
-            if (validData)
-            {
-                while (getImageThread.IsAlive)
-                {
-                    Application.DoEvents();
-                    Thread.Sleep(0);
-                }
 
+        /// <summary>
+        /// Event triggered when the user drops some stuff over our control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        async private void KeyDragDrop(object sender, DragEventArgs e)
+        {
+            string filename;
+            bool supported = GetDragPayloadFilename(out filename, e);
+            if (supported)
+            {
+                // Load our bitmap asynchronously
+                Bitmap bmp = await Task.Run(() =>
+                {
+                    return new Bitmap(filename);
+                });
+
+                // Render our key
                 PictureBox pictureBox=(PictureBox)(((Label)sender).Parent);
-                pictureBox.Image = image;
+                pictureBox.Image = bmp;
                 Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
                 pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
 
+                // Upload our render
                 int keyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(pictureBox);
-                //iClient.SetKeyBitmap(1, StreamDeck.KeyBitmap.FromFile(path).CloneBitmapData());
                 iClient.SetKeyBitmap(keyIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
+                
+                // Store the in our model bitmap in our model
+                iStreamDeckModel.Profiles[0].Keys[keyIndex].Bitmap = bmp;
 
-                // Store that bitmap in our model
-                iStreamDeckModel.Profiles[0].Keys[keyIndex].Bitmap = new Bitmap(image);
-
+                // Persist our modified model
                 SaveModel();
             }
         }
 
-        protected void LoadImage()
+        /// <summary>
+        /// Get drag event payload filename if any.
+        /// </summary>
+        /// <param name="aFilename">Will contain the filename of the drag operation payload.</param>
+        /// <param name="aEvent">Our drag event argument.</param>
+        /// <returns>True if we support the filename extension, false otherwise.</returns>
+        private static bool GetDragPayloadFilename(out string aFilename, DragEventArgs aEvent)
         {
-            image = new Bitmap(path);
-        }
-
-        private void pictureBox1_DragLeave(object sender, EventArgs e)
-        {
-
-        }
-
-        private bool GetFilename(out string filename, DragEventArgs e)
-        {
-            bool ret = false;
-            filename = String.Empty;
-            if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
+            aFilename = String.Empty;
+            if ((aEvent.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
             {
-                Array data = ((IDataObject)e.Data).GetData("FileDrop") as Array;
+                Array data = ((IDataObject)aEvent.Data).GetData("FileDrop") as Array;
                 if (data != null)
                 {
                     if ((data.Length == 1) && (data.GetValue(0) is String))
                     {
-                        filename = ((string[])data)[0];
-                        string ext = Path.GetExtension(filename).ToLower();
+                        aFilename = ((string[])data)[0];
+                        string ext = Path.GetExtension(aFilename).ToLower();
                         if ((ext == ".jpg") || (ext == ".png") || (ext == ".bmp"))
                         {
-                            ret = true;
+                            return true;
                         }
                     }
                 }
             }
-            return ret;
+            return false;
         }
 
         /// <summary>
