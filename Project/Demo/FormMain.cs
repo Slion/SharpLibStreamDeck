@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using StreamDeck = SharpLib.StreamDeck;
+using System.Configuration;
+using System.Runtime.Serialization;
 
 namespace StreamDeckDemo
 {
@@ -21,6 +24,8 @@ namespace StreamDeckDemo
         protected Image image;
         protected Thread getImageThread;
 
+        StreamDeck.Model iStreamDeckModel;
+
         private TableLayoutPanel iTableLayoutPanelStreamDeck;
 
         public FormMain()
@@ -28,7 +33,22 @@ namespace StreamDeckDemo
             InitializeComponent();
 
             iClient = new StreamDeck.Client();
-            iClient.Open();
+            try
+            {
+                iClient.Open();
+            }
+            catch
+            {
+                Trace.WriteLine("ERROR: Could not open Stream Deck!");
+            }
+
+            LoadModel();
+            if (iStreamDeckModel == null)
+            {
+                // Create a default model
+                iStreamDeckModel = new StreamDeck.Model();
+                iStreamDeckModel.Construct();
+            }
 
             CreateStreamDeckControls();
         }
@@ -118,7 +138,8 @@ namespace StreamDeckDemo
             //label.Name = "label1";
             label.Size = new System.Drawing.Size(72, 72);
             //label.TabIndex = 19;
-            label.Text = panelIndex.ToString();
+            //label.Text = panelIndex.ToString();
+            label.Text = iStreamDeckModel.Profiles[0].Keys[panelIndex].Text;
             label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             label.DragDrop += new DragEventHandler(label_DragDrop);
             label.DragEnter += new DragEventHandler(label_DragEnter);
@@ -135,6 +156,7 @@ namespace StreamDeckDemo
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             //pictureBox1.TabIndex = 16;
             pictureBox.TabStop = false;
+            pictureBox.Image = iStreamDeckModel.Profiles[0].Keys[panelIndex].Bitmap;
 
             //
             iTableLayoutPanelStreamDeck.Controls.Add(pictureBox, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
@@ -183,6 +205,11 @@ namespace StreamDeckDemo
                 int keyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(pictureBox);
                 //iClient.SetKeyBitmap(1, StreamDeck.KeyBitmap.FromFile(path).CloneBitmapData());
                 iClient.SetKeyBitmap(keyIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
+
+                // Store that bitmap in our model
+                iStreamDeckModel.Profiles[0].Keys[keyIndex].Bitmap = new Bitmap(image);
+
+                SaveModel();
             }
         }
 
@@ -217,6 +244,39 @@ namespace StreamDeckDemo
                 }
             }
             return ret;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SaveModel()
+        {
+            //string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            //destFile += ".streamdeck.xml";
+            //
+            DataContractSerializer s = new DataContractSerializer(typeof(StreamDeck.Model));
+            using (FileStream fs = File.Open("stream-deck.xml", FileMode.Create))
+            //using (FileStream fs = File.Open(destFile, FileMode.Create))
+            {
+                Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
+                s.WriteObject(fs, iStreamDeckModel);
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadModel()
+        {
+            DataContractSerializer s = new DataContractSerializer(typeof(StreamDeck.Model));
+            using (FileStream fs = File.Open("stream-deck.xml", FileMode.Open))
+            //using (FileStream fs = File.Open(destFile, FileMode.Create))
+            {
+                Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
+                iStreamDeckModel = (StreamDeck.Model)s.ReadObject(fs);
+            }
+
         }
 
     }

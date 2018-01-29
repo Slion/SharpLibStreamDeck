@@ -31,8 +31,10 @@ namespace SharpLib.StreamDeck
             var dev = HidDevices.Enumerate(vendorId, productId).FirstOrDefault();
 
             if (dev == null)
+            {
                 throw new NotFoundException();
-
+            }
+                
             Open(dev);
         }
 
