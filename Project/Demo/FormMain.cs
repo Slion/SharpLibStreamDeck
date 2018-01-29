@@ -53,7 +53,8 @@ namespace StreamDeckDemo
                 iStreamDeckModel.Construct();
             }
 
-            CreateStreamDeckControls();
+            PopulateProfiles();
+            iComboBoxProfiles.SelectedIndex = 0;            
         }
 
         /// <summary>
@@ -62,6 +63,15 @@ namespace StreamDeckDemo
         private void CreateStreamDeckControls()
         {
             SuspendLayout();
+
+            // Trash existing control first 
+            if (iTableLayoutPanelStreamDeck != null)
+            {
+                Controls.Remove(iTableLayoutPanelStreamDeck);
+                iTableLayoutPanelStreamDeck.Dispose();
+                iTableLayoutPanelStreamDeck = null;
+            }
+
             //
             CreateStreamDeckTableLayoutPanel();
 
@@ -138,8 +148,8 @@ namespace StreamDeckDemo
             //label.TabIndex = panelIndex;
             //label.TabStop = true;
             // Fetch our text from our model
-            label.Text = iStreamDeckModel.Profiles[0].Keys[panelIndex].Text;
-            label.Font = iStreamDeckModel.Profiles[0].Keys[panelIndex].Font;
+            label.Text = iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[panelIndex].Text;
+            label.Font = iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[panelIndex].Font;
             label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             label.DragDrop += new DragEventHandler(KeyDragDrop);
             label.DragEnter += new DragEventHandler(KeyDragEnter);
@@ -157,7 +167,7 @@ namespace StreamDeckDemo
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             //pictureBox1.TabIndex = 16;
             pictureBox.TabStop = false;
-            pictureBox.Image = iStreamDeckModel.Profiles[0].Keys[panelIndex].Bitmap;
+            pictureBox.Image = iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[panelIndex].Bitmap;
 
             //
             iTableLayoutPanelStreamDeck.Controls.Add(pictureBox, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
@@ -166,6 +176,7 @@ namespace StreamDeckDemo
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+            SaveModel();
             iClient.Dispose();
             iClient = null;
         }
@@ -221,7 +232,7 @@ namespace StreamDeckDemo
                 iClient.SetKeyBitmap(keyIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
                 
                 // Store the in our model bitmap in our model
-                iStreamDeckModel.Profiles[0].Keys[keyIndex].Bitmap = bmp;
+                iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[keyIndex].Bitmap = bmp;
 
                 // Persist our modified model
                 SaveModel();
@@ -322,7 +333,7 @@ namespace StreamDeckDemo
 
         StreamDeck.Key CurrentKey { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
         Label CurrentKeyLabel { get { return (Label)iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex].Controls[0]; } }
-
+        StreamDeck.Profile CurrentProfile { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex]; } }
 
         /// <summary>
         /// 
@@ -344,6 +355,10 @@ namespace StreamDeckDemo
         private void iButtonSave_Click(object sender, EventArgs e)
         {
             SaveModel();
+
+            // Make sure we update our profile list in case profile name was edited 
+            PopulateProfiles();
+            iComboBoxProfiles.SelectedItem = CurrentProfile.Name;
         }
 
         private void iButtonFont_Click(object sender, EventArgs e)
@@ -372,6 +387,47 @@ namespace StreamDeckDemo
                 iTextBoxKeyEditor.Font = iFontDialog.Font;
                 SaveModel();
             }
+        }
+
+        private void iButtonNewProfile_Click(object sender, EventArgs e)
+        {
+            CreateNewProfile();
+        }
+
+        void CreateNewProfile()
+        {
+            StreamDeck.Profile profile = new StreamDeck.Profile();
+            profile.Construct();            
+            iStreamDeckModel.Profiles.Add(profile);
+            profile.Name = "Profile " + iStreamDeckModel.Profiles.Count.ToString();
+            PopulateProfiles();
+            iComboBoxProfiles.SelectedItem = profile.Name;
+        }
+
+        void PopulateProfiles()
+        {
+            iComboBoxProfiles.Items.Clear();
+            foreach (StreamDeck.Profile profile in iStreamDeckModel.Profiles)
+            {
+                iComboBoxProfiles.Items.Add(profile.Name);
+            }
+        }
+
+        private void iComboBoxProfiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            iCurrentProfileIndex = iComboBoxProfiles.SelectedIndex;
+            LoadCurrentProfile();
+        }
+
+        void LoadCurrentProfile()
+        {
+
+            CreateStreamDeckControls();
+        }
+
+        private void iComboBoxProfiles_TextUpdate(object sender, EventArgs e)
+        {
+            CurrentProfile.Name = iComboBoxProfiles.Text;
         }
     }
 }
