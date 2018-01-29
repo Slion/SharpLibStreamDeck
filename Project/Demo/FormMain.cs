@@ -140,7 +140,7 @@ namespace StreamDeckDemo
             label.AllowDrop = true;
             label.BackColor = System.Drawing.Color.Transparent;
             label.Location = new System.Drawing.Point(0, 0);
-            label.Margin = new Padding(0);
+            label.Margin = new Padding(KKeyPaddingInPixels);
             //label.Name = "label1";
             label.Size = new System.Drawing.Size(72, 72);
             //label.TabIndex = panelIndex;
@@ -150,28 +150,16 @@ namespace StreamDeckDemo
             label.Font = CurrentProfile.Keys[panelIndex].Font;
             label.TextAlign = CurrentProfile.Keys[panelIndex].TextAlign;
             label.ForeColor = CurrentProfile.Keys[panelIndex].FontColor;
+            label.BackgroundImage = CurrentProfile.Keys[panelIndex].Bitmap;
+            label.BackgroundImageLayout = ImageLayout.Stretch;
 
             // Hook in event handlers
             label.DragDrop += new DragEventHandler(KeyDragDrop);
             label.DragEnter += new DragEventHandler(KeyDragEnter);
             label.Click += new EventHandler(KeyClick);
-            // 
-            // Create picture box
-            // 
-            PictureBox pictureBox = new PictureBox();
-            pictureBox.Controls.Add(label);
-            pictureBox.BackColor = System.Drawing.SystemColors.Control;
-            pictureBox.Location = new System.Drawing.Point(0, 0);
-            pictureBox.Margin = new Padding(KKeyPaddingInPixels);
-            //pictureBox1.Name = "pictureBox1";
-            pictureBox.Size = new System.Drawing.Size(72, 72);
-            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            //pictureBox1.TabIndex = 16;
-            pictureBox.TabStop = false;
-            pictureBox.Image = iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[panelIndex].Bitmap;
 
             //
-            iTableLayoutPanelStreamDeck.Controls.Add(pictureBox, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
+            iTableLayoutPanelStreamDeck.Controls.Add(label, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
         }
 
 
@@ -223,13 +211,13 @@ namespace StreamDeckDemo
                 });
 
                 // Render our key
-                PictureBox pictureBox=(PictureBox)(((Label)sender).Parent);
-                pictureBox.Image = bmp;
-                Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
-                pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
+                Label ctrl = sender as Label;
+                ctrl.BackgroundImage = bmp;
+                Bitmap bitmap = new Bitmap(ctrl.Width, ctrl.Height);
+                ctrl.DrawToBitmap(bitmap, ctrl.ClientRectangle);
 
                 // Upload our render
-                int keyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(pictureBox);
+                int keyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(ctrl);
                 iClient.SetKeyBitmap(keyIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
                 
                 // Store the bitmap in our model bitmap in our model
@@ -249,8 +237,7 @@ namespace StreamDeckDemo
         private void KeyClick(object sender, EventArgs e)
         {
             // Workout the index of the key that was just clicked
-            PictureBox pictureBox = (PictureBox)(((Label)sender).Parent);            
-            iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(pictureBox);
+            iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(sender as Label);
             // Load that key into our editor
             EditCurrentKey();
         }
@@ -467,9 +454,9 @@ namespace StreamDeckDemo
         void UploadKey(int aIndex)
         {
             // Render our key
-            PictureBox pictureBox = iTableLayoutPanelStreamDeck.Controls[aIndex] as PictureBox;
-            Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
-            pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
+            Label ctrl = iTableLayoutPanelStreamDeck.Controls[aIndex] as Label;
+            Bitmap bitmap = new Bitmap(ctrl.Width, ctrl.Height);
+            ctrl.DrawToBitmap(bitmap, ctrl.ClientRectangle);
 
             // Upload our render
             iClient.SetKeyBitmap(aIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
