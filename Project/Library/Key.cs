@@ -27,6 +27,9 @@ namespace SharpLib.StreamDeck
         public string FontName { get; set; }
 
         [DataMember]
+        public Color FontColor { get; set; }
+
+        [DataMember]
         public string EventName;
 
         public void Construct()
@@ -34,9 +37,23 @@ namespace SharpLib.StreamDeck
             if (Bitmap == null)
             {
                 Bitmap = new Bitmap(Client.iconSize, Client.iconSize);
+                FillBitmap(Brushes.Black);
+                FontColor = Color.White;
+                TextAlign = ContentAlignment.MiddleCenter;
             }
 
-            TextAlign = ContentAlignment.MiddleCenter;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aColor"></param>
+        public void FillBitmap(Brush aBrush)
+        {
+            using (Graphics g = Graphics.FromImage(Bitmap))
+            {
+                g.FillRectangle(aBrush, 0, 0, Bitmap.Width, Bitmap.Height);
+            }
         }
 
         /// <summary>

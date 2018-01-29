@@ -19,12 +19,19 @@ namespace SharpLib.StreamDeck
             if (Profiles==null)
             {
                 Profiles = new List<Profile>();
-
-                Profile defaultProfile = new Profile();
-                defaultProfile.Name = "Default";
-                defaultProfile.Construct();
-                Profiles.Add(defaultProfile);
+                CreateDefaultProfile();
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CreateDefaultProfile()
+        {
+            Profile defaultProfile = new Profile();
+            defaultProfile.Name = "Default";
+            defaultProfile.Construct();
+            Profiles.Add(defaultProfile);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace SharpLib.StreamDeck
         private byte[] keyStates = new byte[numOfKeys];
         private volatile bool disposed = false;
 
-        internal const int numOfKeys = 15; // TODO: remove that
+        public const int numOfKeys = 15; // TODO: remove that
         internal const int iconSize = 72;  // TODO: remove that
         internal const int rawBitmapDataLength = iconSize * iconSize * 3;
         internal const int pagePacketSize = 8191;

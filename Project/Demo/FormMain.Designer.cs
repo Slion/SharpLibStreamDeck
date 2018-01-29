@@ -43,7 +43,7 @@
             this.iTextBoxKeyEditor.Location = new System.Drawing.Point(631, 257);
             this.iTextBoxKeyEditor.Multiline = true;
             this.iTextBoxKeyEditor.Name = "iTextBoxKeyEditor";
-            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(72, 72);
+            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(76, 76);
             this.iTextBoxKeyEditor.TabIndex = 0;
             this.iTextBoxKeyEditor.TextChanged += new System.EventHandler(this.iTextBoxKeyEditor_TextChanged);
             // 
@@ -95,6 +95,7 @@
             this.iButtonDeleteProfile.TabIndex = 6;
             this.iButtonDeleteProfile.Text = "Delete Profile";
             this.iButtonDeleteProfile.UseVisualStyleBackColor = true;
+            this.iButtonDeleteProfile.Click += new System.EventHandler(this.iButtonDeleteProfile_Click);
             // 
             // FormMain
             // 
@@ -110,6 +111,7 @@
             this.Name = "FormMain";
             this.Text = "Stream Deck Demo";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
+            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -28,7 +28,6 @@ namespace StreamDeckDemo
         const int KKeyPaddingInPixels = 8;
         const int KKeyBordersInPixels = KKeyPaddingInPixels * 2;
 
-
         private TableLayoutPanel iTableLayoutPanelStreamDeck;
 
         public FormMain()
@@ -53,8 +52,7 @@ namespace StreamDeckDemo
                 iStreamDeckModel.Construct();
             }
 
-            PopulateProfiles();
-            iComboBoxProfiles.SelectedIndex = 0;            
+            PopulateProfiles();            
         }
 
         /// <summary>
@@ -148,9 +146,12 @@ namespace StreamDeckDemo
             //label.TabIndex = panelIndex;
             //label.TabStop = true;
             // Fetch our text from our model
-            label.Text = iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[panelIndex].Text;
-            label.Font = iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[panelIndex].Font;
-            label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label.Text = CurrentProfile.Keys[panelIndex].Text;
+            label.Font = CurrentProfile.Keys[panelIndex].Font;
+            label.TextAlign = CurrentProfile.Keys[panelIndex].TextAlign;
+            label.ForeColor = CurrentProfile.Keys[panelIndex].FontColor;
+
+            // Hook in event handlers
             label.DragDrop += new DragEventHandler(KeyDragDrop);
             label.DragEnter += new DragEventHandler(KeyDragEnter);
             label.Click += new EventHandler(KeyClick);
@@ -231,7 +232,7 @@ namespace StreamDeckDemo
                 int keyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(pictureBox);
                 iClient.SetKeyBitmap(keyIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
                 
-                // Store the in our model bitmap in our model
+                // Store the bitmap in our model bitmap in our model
                 iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[keyIndex].Bitmap = bmp;
 
                 // Persist our modified model
@@ -354,6 +355,11 @@ namespace StreamDeckDemo
 
         private void iButtonSave_Click(object sender, EventArgs e)
         {
+            SaveModelAndReload();
+        }
+
+        void SaveModelAndReload()
+        {
             SaveModel();
 
             // Make sure we update our profile list in case profile name was edited 
@@ -394,6 +400,22 @@ namespace StreamDeckDemo
             CreateNewProfile();
         }
 
+        private void iButtonDeleteProfile_Click(object sender, EventArgs e)
+        {
+            DeleteCurrentProfile();
+        }
+
+        void DeleteCurrentProfile()
+        {
+            iStreamDeckModel.Profiles.Remove(CurrentProfile);
+            // Create default profile if none present
+            if (iStreamDeckModel.Profiles.Count==0)
+            {
+                iStreamDeckModel.CreateDefaultProfile();
+            }
+            SaveModelAndReload();
+        }
+
         void CreateNewProfile()
         {
             StreamDeck.Profile profile = new StreamDeck.Profile();
@@ -421,13 +443,44 @@ namespace StreamDeckDemo
 
         void LoadCurrentProfile()
         {
-
             CreateStreamDeckControls();
+            UploadAllKeys(); 
         }
 
         private void iComboBoxProfiles_TextUpdate(object sender, EventArgs e)
         {
             CurrentProfile.Name = iComboBoxProfiles.Text;
         }
+
+        void UploadAllKeys()
+        {
+            for (int i = 0; i < StreamDeck.Client.numOfKeys; i++)
+            {
+                UploadKey(i);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aIndex"></param>
+        void UploadKey(int aIndex)
+        {
+            // Render our key
+            PictureBox pictureBox = iTableLayoutPanelStreamDeck.Controls[aIndex] as PictureBox;
+            Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+            pictureBox.DrawToBitmap(bitmap, pictureBox.ClientRectangle);
+
+            // Upload our render
+            iClient.SetKeyBitmap(aIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
+        }
+
+        private void FormMain_Shown(object sender, EventArgs e)
+        {
+            // Will trigger our first profile load and render
+            // We had to delay this otherwise labels would not be rendered
+            iComboBoxProfiles.SelectedIndex = 0;
+        }
+
     }
 }
