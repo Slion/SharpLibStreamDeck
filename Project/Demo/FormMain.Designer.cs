@@ -48,6 +48,7 @@
             this.iButtonTextAlignBottomRight = new System.Windows.Forms.Button();
             this.iButtonTextAlignMiddleRight = new System.Windows.Forms.Button();
             this.iButtonTextAlignTopRight = new System.Windows.Forms.Button();
+            this.iButtonBitmapColor = new System.Windows.Forms.Button();
             this.iGroupBoxTextAlign.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -243,11 +244,22 @@
             this.iButtonTextAlignTopRight.UseVisualStyleBackColor = true;
             this.iButtonTextAlignTopRight.Click += new System.EventHandler(this.ButtonTextAlignClick);
             // 
+            // iButtonBitmapColor
+            // 
+            this.iButtonBitmapColor.Location = new System.Drawing.Point(511, 377);
+            this.iButtonBitmapColor.Name = "iButtonBitmapColor";
+            this.iButtonBitmapColor.Size = new System.Drawing.Size(110, 23);
+            this.iButtonBitmapColor.TabIndex = 9;
+            this.iButtonBitmapColor.Text = "Background Color";
+            this.iButtonBitmapColor.UseVisualStyleBackColor = true;
+            this.iButtonBitmapColor.Click += new System.EventHandler(this.iButtonBitmapColor_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 436);
+            this.Controls.Add(this.iButtonBitmapColor);
             this.Controls.Add(this.iGroupBoxTextAlign);
             this.Controls.Add(this.iButtonFontColor);
             this.Controls.Add(this.iButtonDeleteProfile);
@@ -288,6 +300,7 @@
         private System.Windows.Forms.Button iButtonTextAlignBottomRight;
         private System.Windows.Forms.Button iButtonTextAlignMiddleRight;
         private System.Windows.Forms.Button iButtonTextAlignTopRight;
+        private System.Windows.Forms.Button iButtonBitmapColor;
     }
 }
 

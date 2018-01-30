@@ -427,6 +427,19 @@ namespace StreamDeckDemo
             }
         }
 
+        private void iButtonBitmapColor_Click(object sender, EventArgs e)
+        {
+            //iColorDialog.Color = Color.;
+
+            if (DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
+            {
+                //Save font settings                
+                CurrentKey.FillBitmap(iColorDialog.Color);
+                //
+                SaveModelAndReload();
+            }
+        }
+
         private void iButtonNewProfile_Click(object sender, EventArgs e)
         {
             CreateNewProfile();
@@ -523,6 +536,5 @@ namespace StreamDeckDemo
             // We had to delay this otherwise labels would not be rendered
             iComboBoxProfiles.SelectedIndex = 0;
         }
-
     }
 }

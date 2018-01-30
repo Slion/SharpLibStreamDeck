@@ -47,7 +47,7 @@ namespace SharpLib.StreamDeck
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="aColor"></param>
+        /// <param name="aBrush"></param>
         public void FillBitmap(Brush aBrush)
         {
             using (Graphics g = Graphics.FromImage(Bitmap))
@@ -55,6 +55,20 @@ namespace SharpLib.StreamDeck
                 g.FillRectangle(aBrush, 0, 0, Bitmap.Width, Bitmap.Height);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aColor"></param>
+        public void FillBitmap(Color aColor)
+        {
+            using (Graphics gfx = Graphics.FromImage(Bitmap))
+            using (SolidBrush brush = new SolidBrush(aColor))
+            {
+                gfx.FillRectangle(brush, 0, 0, Bitmap.Width, Bitmap.Height);
+            }
+        }
+
 
         /// <summary>
         /// The Font object itself is not serialisable.
