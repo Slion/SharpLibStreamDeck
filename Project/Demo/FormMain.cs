@@ -136,7 +136,7 @@ namespace StreamDeckDemo
             // 
             // Create label
             // 
-            Label label = new Label();
+            StreamDeck.Label label = new StreamDeck.Label();
             label.AllowDrop = true;
             label.BackColor = System.Drawing.Color.Transparent;
             label.Location = new System.Drawing.Point(0, 0);
@@ -150,6 +150,8 @@ namespace StreamDeckDemo
             label.Font = CurrentProfile.Keys[panelIndex].Font;
             label.TextAlign = CurrentProfile.Keys[panelIndex].TextAlign;
             label.ForeColor = CurrentProfile.Keys[panelIndex].FontColor;
+            label.OutlineColor = CurrentProfile.Keys[panelIndex].OutlineColor;
+            label.OutlineThickness = CurrentProfile.Keys[panelIndex].OutlineThickness;
             label.BackgroundImage = CurrentProfile.Keys[panelIndex].Bitmap;
             label.BackgroundImageLayout = ImageLayout.Stretch;
 
@@ -210,19 +212,14 @@ namespace StreamDeckDemo
                     return new Bitmap(filename);
                 });
 
-                // Render our key
-                Label ctrl = sender as Label;
-                ctrl.BackgroundImage = bmp;
-                Bitmap bitmap = new Bitmap(ctrl.Width, ctrl.Height);
-                ctrl.DrawToBitmap(bitmap, ctrl.ClientRectangle);
-
-                // Upload our render
-                int keyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(ctrl);
-                iClient.SetKeyBitmap(keyIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
-                
+                // Work out drop target key index and make it current
+                StreamDeck.Label ctrl = sender as StreamDeck.Label;
+                iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(ctrl);
                 // Store the bitmap in our model bitmap in our model
-                iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[keyIndex].Bitmap = bmp;
-
+                iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex].Bitmap = bmp;
+                UploadKey(iCurrentKeyIndex);
+                EditCurrentKey();
+                                              
                 // Persist our modified model
                 SaveModel();
             }
@@ -320,7 +317,7 @@ namespace StreamDeckDemo
         }
 
         StreamDeck.Key CurrentKey { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
-        Label CurrentKeyLabel { get { return iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex] as Label; } }
+        StreamDeck.Label CurrentKeyLabel { get { return iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex] as StreamDeck.Label; } }
         StreamDeck.Profile CurrentProfile { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex]; } }
 
         /// <summary>
@@ -332,6 +329,7 @@ namespace StreamDeckDemo
             iTextBoxKeyEditor.Text = aKey.Text;
             iTextBoxKeyEditor.Font = aKey.Font;
             SetTextAlignButton(aKey.TextAlign);
+            iNumericOutlineThickness.Value = Convert.ToDecimal(aKey.OutlineThickness);
         }
 
         void SetTextAlignButton(ContentAlignment aContentAlignment)
@@ -427,9 +425,23 @@ namespace StreamDeckDemo
             }
         }
 
+        private void iButtonOutlineColor_Click(object sender, EventArgs e)
+        {
+            iColorDialog.Color = CurrentKeyLabel.OutlineColor;
+
+            if (DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
+            {
+                //Save font settings
+                CurrentKeyLabel.OutlineColor = iColorDialog.Color;
+                CurrentKey.OutlineColor = iColorDialog.Color;
+                //
+                SaveModelAndReload();
+            }
+
+        }
+
         private void iButtonBitmapColor_Click(object sender, EventArgs e)
         {
-            //iColorDialog.Color = Color.;
 
             if (DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
             {
@@ -535,6 +547,17 @@ namespace StreamDeckDemo
             // Will trigger our first profile load and render
             // We had to delay this otherwise labels would not be rendered
             iComboBoxProfiles.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// User adjusting font outline thickness.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void iNumericOutlineThickness_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentKey.OutlineThickness = (float)iNumericOutlineThickness.Value;
+            CurrentKeyLabel.OutlineThickness = (float)iNumericOutlineThickness.Value;
         }
     }
 }

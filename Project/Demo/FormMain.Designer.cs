@@ -49,23 +49,26 @@
             this.iButtonTextAlignMiddleRight = new System.Windows.Forms.Button();
             this.iButtonTextAlignTopRight = new System.Windows.Forms.Button();
             this.iButtonBitmapColor = new System.Windows.Forms.Button();
+            this.iButtonOutlineColor = new System.Windows.Forms.Button();
+            this.iNumericOutlineThickness = new System.Windows.Forms.NumericUpDown();
             this.iGroupBoxTextAlign.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).BeginInit();
             this.SuspendLayout();
             // 
             // iTextBoxKeyEditor
             // 
             this.iTextBoxKeyEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iTextBoxKeyEditor.Location = new System.Drawing.Point(572, 266);
+            this.iTextBoxKeyEditor.Location = new System.Drawing.Point(511, 288);
             this.iTextBoxKeyEditor.Multiline = true;
             this.iTextBoxKeyEditor.Name = "iTextBoxKeyEditor";
-            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(130, 76);
+            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(191, 76);
             this.iTextBoxKeyEditor.TabIndex = 0;
             this.iTextBoxKeyEditor.TextChanged += new System.EventHandler(this.iTextBoxKeyEditor_TextChanged);
             // 
             // iButtonSave
             // 
             this.iButtonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.iButtonSave.Location = new System.Drawing.Point(12, 401);
+            this.iButtonSave.Location = new System.Drawing.Point(12, 423);
             this.iButtonSave.Name = "iButtonSave";
             this.iButtonSave.Size = new System.Drawing.Size(75, 23);
             this.iButtonSave.TabIndex = 1;
@@ -76,7 +79,7 @@
             // iButtonFont
             // 
             this.iButtonFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonFont.Location = new System.Drawing.Point(627, 348);
+            this.iButtonFont.Location = new System.Drawing.Point(627, 370);
             this.iButtonFont.Name = "iButtonFont";
             this.iButtonFont.Size = new System.Drawing.Size(75, 23);
             this.iButtonFont.TabIndex = 2;
@@ -119,7 +122,7 @@
             // iButtonFontColor
             // 
             this.iButtonFontColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonFontColor.Location = new System.Drawing.Point(627, 377);
+            this.iButtonFontColor.Location = new System.Drawing.Point(627, 399);
             this.iButtonFontColor.Name = "iButtonFontColor";
             this.iButtonFontColor.Size = new System.Drawing.Size(75, 23);
             this.iButtonFontColor.TabIndex = 7;
@@ -139,7 +142,7 @@
             this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignBottomRight);
             this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignMiddleRight);
             this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignTopRight);
-            this.iGroupBoxTextAlign.Location = new System.Drawing.Point(572, 121);
+            this.iGroupBoxTextAlign.Location = new System.Drawing.Point(572, 143);
             this.iGroupBoxTextAlign.Name = "iGroupBoxTextAlign";
             this.iGroupBoxTextAlign.Size = new System.Drawing.Size(126, 139);
             this.iGroupBoxTextAlign.TabIndex = 8;
@@ -246,7 +249,8 @@
             // 
             // iButtonBitmapColor
             // 
-            this.iButtonBitmapColor.Location = new System.Drawing.Point(511, 377);
+            this.iButtonBitmapColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iButtonBitmapColor.Location = new System.Drawing.Point(430, 399);
             this.iButtonBitmapColor.Name = "iButtonBitmapColor";
             this.iButtonBitmapColor.Size = new System.Drawing.Size(110, 23);
             this.iButtonBitmapColor.TabIndex = 9;
@@ -254,11 +258,44 @@
             this.iButtonBitmapColor.UseVisualStyleBackColor = true;
             this.iButtonBitmapColor.Click += new System.EventHandler(this.iButtonBitmapColor_Click);
             // 
+            // iButtonOutlineColor
+            // 
+            this.iButtonOutlineColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iButtonOutlineColor.Location = new System.Drawing.Point(546, 399);
+            this.iButtonOutlineColor.Name = "iButtonOutlineColor";
+            this.iButtonOutlineColor.Size = new System.Drawing.Size(75, 23);
+            this.iButtonOutlineColor.TabIndex = 10;
+            this.iButtonOutlineColor.Text = "Outline Color";
+            this.iButtonOutlineColor.UseVisualStyleBackColor = true;
+            this.iButtonOutlineColor.Click += new System.EventHandler(this.iButtonOutlineColor_Click);
+            // 
+            // iNumericOutlineThickness
+            // 
+            this.iNumericOutlineThickness.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.iNumericOutlineThickness.DecimalPlaces = 1;
+            this.iNumericOutlineThickness.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.iNumericOutlineThickness.Location = new System.Drawing.Point(546, 371);
+            this.iNumericOutlineThickness.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.iNumericOutlineThickness.Name = "iNumericOutlineThickness";
+            this.iNumericOutlineThickness.Size = new System.Drawing.Size(74, 20);
+            this.iNumericOutlineThickness.TabIndex = 11;
+            this.iNumericOutlineThickness.ValueChanged += new System.EventHandler(this.iNumericOutlineThickness_ValueChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(710, 436);
+            this.ClientSize = new System.Drawing.Size(710, 458);
+            this.Controls.Add(this.iNumericOutlineThickness);
+            this.Controls.Add(this.iButtonOutlineColor);
             this.Controls.Add(this.iButtonBitmapColor);
             this.Controls.Add(this.iGroupBoxTextAlign);
             this.Controls.Add(this.iButtonFontColor);
@@ -273,6 +310,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.iGroupBoxTextAlign.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -301,6 +339,8 @@
         private System.Windows.Forms.Button iButtonTextAlignMiddleRight;
         private System.Windows.Forms.Button iButtonTextAlignTopRight;
         private System.Windows.Forms.Button iButtonBitmapColor;
+        private System.Windows.Forms.Button iButtonOutlineColor;
+        private System.Windows.Forms.NumericUpDown iNumericOutlineThickness;
     }
 }
 

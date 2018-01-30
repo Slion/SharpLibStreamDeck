@@ -86,6 +86,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Label\Label.csproj">
+      <Project>{171b536b-0e62-476e-9130-8d14a841edc0}</Project>
+      <Name>Label</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library\SharpLibStreamDeck.csproj">
       <Project>{d06ab787-766e-4b28-89c4-8d948070eb1c}</Project>
       <Name>SharpLibStreamDeck</Name>

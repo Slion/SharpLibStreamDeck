@@ -30,6 +30,12 @@ namespace SharpLib.StreamDeck
         public Color FontColor { get; set; }
 
         [DataMember]
+        public Color OutlineColor { get; set; }
+
+        [DataMember]
+        public float OutlineThickness { get; set; }
+
+        [DataMember]
         public string EventName;
 
         public void Construct()
