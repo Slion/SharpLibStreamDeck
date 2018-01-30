@@ -51,8 +51,10 @@
             this.iButtonBitmapColor = new System.Windows.Forms.Button();
             this.iButtonOutlineColor = new System.Windows.Forms.Button();
             this.iNumericOutlineThickness = new System.Windows.Forms.NumericUpDown();
+            this.iTrackBarBrightness = new System.Windows.Forms.TrackBar();
             this.iGroupBoxTextAlign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iTrackBarBrightness)).BeginInit();
             this.SuspendLayout();
             // 
             // iTextBoxKeyEditor
@@ -289,11 +291,25 @@
             this.iNumericOutlineThickness.TabIndex = 11;
             this.iNumericOutlineThickness.ValueChanged += new System.EventHandler(this.iNumericOutlineThickness_ValueChanged);
             // 
+            // iTrackBarBrightness
+            // 
+            this.iTrackBarBrightness.Cursor = System.Windows.Forms.Cursors.Default;
+            this.iTrackBarBrightness.Location = new System.Drawing.Point(511, 22);
+            this.iTrackBarBrightness.Maximum = 100;
+            this.iTrackBarBrightness.Name = "iTrackBarBrightness";
+            this.iTrackBarBrightness.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.iTrackBarBrightness.Size = new System.Drawing.Size(45, 260);
+            this.iTrackBarBrightness.TabIndex = 12;
+            this.iTrackBarBrightness.TickFrequency = 5;
+            this.iTrackBarBrightness.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.iTrackBarBrightness.Scroll += new System.EventHandler(this.iTrackBarBrightness_Scroll);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 458);
+            this.Controls.Add(this.iTrackBarBrightness);
             this.Controls.Add(this.iNumericOutlineThickness);
             this.Controls.Add(this.iButtonOutlineColor);
             this.Controls.Add(this.iButtonBitmapColor);
@@ -311,6 +327,7 @@
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.iGroupBoxTextAlign.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iTrackBarBrightness)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,6 +358,7 @@
         private System.Windows.Forms.Button iButtonBitmapColor;
         private System.Windows.Forms.Button iButtonOutlineColor;
         private System.Windows.Forms.NumericUpDown iNumericOutlineThickness;
+        private System.Windows.Forms.TrackBar iTrackBarBrightness;
     }
 }
 

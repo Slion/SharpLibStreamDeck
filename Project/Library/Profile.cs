@@ -16,6 +16,9 @@ namespace SharpLib.StreamDeck
         [DataMember]
         public List<Key> Keys;
 
+        [DataMember]
+        public byte Brightness;
+
         public void Construct()
         {
             if (Keys == null)
@@ -30,6 +33,8 @@ namespace SharpLib.StreamDeck
                     key.Text = i.ToString();
                     Keys.Add(key);
                 }
+
+                Brightness = 50;
             }
         }
     }

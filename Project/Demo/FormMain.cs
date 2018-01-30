@@ -470,6 +470,8 @@ namespace StreamDeckDemo
             {
                 iStreamDeckModel.CreateDefaultProfile();
             }
+
+            iCurrentProfileIndex = 0;
             SaveModelAndReload();
         }
 
@@ -499,10 +501,18 @@ namespace StreamDeckDemo
             EditCurrentKey();
         }
 
+        /// <summary>
+        /// Load current profile into UI and Stream Deck
+        /// </summary>
         void LoadCurrentProfile()
         {
+            // Deal with brightness
+            iTrackBarBrightness.Value = CurrentProfile.Brightness;
+            iClient.SetBrightness(CurrentProfile.Brightness);
+            // Update controls
             CreateStreamDeckControls();
-            UploadAllKeys(); 
+            // Upload keys to Stream Deck
+            UploadAllKeys();
         }
 
         /// <summary>
@@ -558,6 +568,14 @@ namespace StreamDeckDemo
         {
             CurrentKey.OutlineThickness = (float)iNumericOutlineThickness.Value;
             CurrentKeyLabel.OutlineThickness = (float)iNumericOutlineThickness.Value;
+        }
+
+        private void iTrackBarBrightness_Scroll(object sender, EventArgs e)
+        {
+            // Update our Stream Deck brightness
+            iClient.SetBrightness((byte)iTrackBarBrightness.Value);
+            // Save it into our profile
+            CurrentProfile.Brightness = (byte)iTrackBarBrightness.Value;
         }
     }
 }
