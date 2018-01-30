@@ -38,20 +38,33 @@
             this.iButtonDeleteProfile = new System.Windows.Forms.Button();
             this.iColorDialog = new System.Windows.Forms.ColorDialog();
             this.iButtonFontColor = new System.Windows.Forms.Button();
+            this.iGroupBoxTextAlign = new System.Windows.Forms.GroupBox();
+            this.iButtonTextAlignBottomLeft = new System.Windows.Forms.Button();
+            this.iButtonTextAlignBottomCenter = new System.Windows.Forms.Button();
+            this.iButtonTextAlignMiddleLeft = new System.Windows.Forms.Button();
+            this.iButtonTextAlignMiddleCenter = new System.Windows.Forms.Button();
+            this.iButtonTextAlignTopLeft = new System.Windows.Forms.Button();
+            this.iButtonTextAlignTopCenter = new System.Windows.Forms.Button();
+            this.iButtonTextAlignBottomRight = new System.Windows.Forms.Button();
+            this.iButtonTextAlignMiddleRight = new System.Windows.Forms.Button();
+            this.iButtonTextAlignTopRight = new System.Windows.Forms.Button();
+            this.iGroupBoxTextAlign.SuspendLayout();
             this.SuspendLayout();
             // 
             // iTextBoxKeyEditor
             // 
-            this.iTextBoxKeyEditor.Location = new System.Drawing.Point(631, 257);
+            this.iTextBoxKeyEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iTextBoxKeyEditor.Location = new System.Drawing.Point(572, 266);
             this.iTextBoxKeyEditor.Multiline = true;
             this.iTextBoxKeyEditor.Name = "iTextBoxKeyEditor";
-            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(76, 76);
+            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(130, 76);
             this.iTextBoxKeyEditor.TabIndex = 0;
             this.iTextBoxKeyEditor.TextChanged += new System.EventHandler(this.iTextBoxKeyEditor_TextChanged);
             // 
             // iButtonSave
             // 
-            this.iButtonSave.Location = new System.Drawing.Point(12, 392);
+            this.iButtonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.iButtonSave.Location = new System.Drawing.Point(12, 401);
             this.iButtonSave.Name = "iButtonSave";
             this.iButtonSave.Size = new System.Drawing.Size(75, 23);
             this.iButtonSave.TabIndex = 1;
@@ -61,7 +74,8 @@
             // 
             // iButtonFont
             // 
-            this.iButtonFont.Location = new System.Drawing.Point(631, 335);
+            this.iButtonFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iButtonFont.Location = new System.Drawing.Point(627, 348);
             this.iButtonFont.Name = "iButtonFont";
             this.iButtonFont.Size = new System.Drawing.Size(75, 23);
             this.iButtonFont.TabIndex = 2;
@@ -81,7 +95,8 @@
             // 
             // iButtonNewProfile
             // 
-            this.iButtonNewProfile.Location = new System.Drawing.Point(579, 13);
+            this.iButtonNewProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.iButtonNewProfile.Location = new System.Drawing.Point(574, 22);
             this.iButtonNewProfile.Name = "iButtonNewProfile";
             this.iButtonNewProfile.Size = new System.Drawing.Size(127, 23);
             this.iButtonNewProfile.TabIndex = 5;
@@ -91,7 +106,8 @@
             // 
             // iButtonDeleteProfile
             // 
-            this.iButtonDeleteProfile.Location = new System.Drawing.Point(579, 41);
+            this.iButtonDeleteProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.iButtonDeleteProfile.Location = new System.Drawing.Point(574, 50);
             this.iButtonDeleteProfile.Name = "iButtonDeleteProfile";
             this.iButtonDeleteProfile.Size = new System.Drawing.Size(127, 23);
             this.iButtonDeleteProfile.TabIndex = 6;
@@ -101,7 +117,8 @@
             // 
             // iButtonFontColor
             // 
-            this.iButtonFontColor.Location = new System.Drawing.Point(632, 364);
+            this.iButtonFontColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iButtonFontColor.Location = new System.Drawing.Point(627, 377);
             this.iButtonFontColor.Name = "iButtonFontColor";
             this.iButtonFontColor.Size = new System.Drawing.Size(75, 23);
             this.iButtonFontColor.TabIndex = 7;
@@ -109,11 +126,129 @@
             this.iButtonFontColor.UseVisualStyleBackColor = true;
             this.iButtonFontColor.Click += new System.EventHandler(this.iButtonFontColor_Click);
             // 
+            // iGroupBoxTextAlign
+            // 
+            this.iGroupBoxTextAlign.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignBottomLeft);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignBottomCenter);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignMiddleLeft);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignMiddleCenter);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignTopLeft);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignTopCenter);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignBottomRight);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignMiddleRight);
+            this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignTopRight);
+            this.iGroupBoxTextAlign.Location = new System.Drawing.Point(572, 121);
+            this.iGroupBoxTextAlign.Name = "iGroupBoxTextAlign";
+            this.iGroupBoxTextAlign.Size = new System.Drawing.Size(126, 139);
+            this.iGroupBoxTextAlign.TabIndex = 8;
+            this.iGroupBoxTextAlign.TabStop = false;
+            this.iGroupBoxTextAlign.Text = "Text alignment";
+            // 
+            // iButtonTextAlignBottomLeft
+            // 
+            this.iButtonTextAlignBottomLeft.Location = new System.Drawing.Point(6, 97);
+            this.iButtonTextAlignBottomLeft.Name = "iButtonTextAlignBottomLeft";
+            this.iButtonTextAlignBottomLeft.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignBottomLeft.TabIndex = 11;
+            this.iButtonTextAlignBottomLeft.TabStop = false;
+            this.iButtonTextAlignBottomLeft.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.iButtonTextAlignBottomLeft.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignBottomLeft.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignBottomCenter
+            // 
+            this.iButtonTextAlignBottomCenter.Location = new System.Drawing.Point(45, 97);
+            this.iButtonTextAlignBottomCenter.Name = "iButtonTextAlignBottomCenter";
+            this.iButtonTextAlignBottomCenter.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignBottomCenter.TabIndex = 5;
+            this.iButtonTextAlignBottomCenter.TabStop = false;
+            this.iButtonTextAlignBottomCenter.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.iButtonTextAlignBottomCenter.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignBottomCenter.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignMiddleLeft
+            // 
+            this.iButtonTextAlignMiddleLeft.Location = new System.Drawing.Point(6, 58);
+            this.iButtonTextAlignMiddleLeft.Name = "iButtonTextAlignMiddleLeft";
+            this.iButtonTextAlignMiddleLeft.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignMiddleLeft.TabIndex = 10;
+            this.iButtonTextAlignMiddleLeft.TabStop = false;
+            this.iButtonTextAlignMiddleLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.iButtonTextAlignMiddleLeft.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignMiddleLeft.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignMiddleCenter
+            // 
+            this.iButtonTextAlignMiddleCenter.Location = new System.Drawing.Point(45, 58);
+            this.iButtonTextAlignMiddleCenter.Name = "iButtonTextAlignMiddleCenter";
+            this.iButtonTextAlignMiddleCenter.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignMiddleCenter.TabIndex = 4;
+            this.iButtonTextAlignMiddleCenter.TabStop = false;
+            this.iButtonTextAlignMiddleCenter.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignMiddleCenter.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignTopLeft
+            // 
+            this.iButtonTextAlignTopLeft.Location = new System.Drawing.Point(6, 19);
+            this.iButtonTextAlignTopLeft.Name = "iButtonTextAlignTopLeft";
+            this.iButtonTextAlignTopLeft.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignTopLeft.TabIndex = 9;
+            this.iButtonTextAlignTopLeft.TabStop = false;
+            this.iButtonTextAlignTopLeft.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.iButtonTextAlignTopLeft.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignTopLeft.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignTopCenter
+            // 
+            this.iButtonTextAlignTopCenter.Location = new System.Drawing.Point(45, 19);
+            this.iButtonTextAlignTopCenter.Name = "iButtonTextAlignTopCenter";
+            this.iButtonTextAlignTopCenter.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignTopCenter.TabIndex = 3;
+            this.iButtonTextAlignTopCenter.TabStop = false;
+            this.iButtonTextAlignTopCenter.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.iButtonTextAlignTopCenter.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignTopCenter.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignBottomRight
+            // 
+            this.iButtonTextAlignBottomRight.Location = new System.Drawing.Point(84, 97);
+            this.iButtonTextAlignBottomRight.Name = "iButtonTextAlignBottomRight";
+            this.iButtonTextAlignBottomRight.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignBottomRight.TabIndex = 2;
+            this.iButtonTextAlignBottomRight.TabStop = false;
+            this.iButtonTextAlignBottomRight.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.iButtonTextAlignBottomRight.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignBottomRight.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignMiddleRight
+            // 
+            this.iButtonTextAlignMiddleRight.Location = new System.Drawing.Point(84, 58);
+            this.iButtonTextAlignMiddleRight.Name = "iButtonTextAlignMiddleRight";
+            this.iButtonTextAlignMiddleRight.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignMiddleRight.TabIndex = 1;
+            this.iButtonTextAlignMiddleRight.TabStop = false;
+            this.iButtonTextAlignMiddleRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.iButtonTextAlignMiddleRight.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignMiddleRight.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
+            // iButtonTextAlignTopRight
+            // 
+            this.iButtonTextAlignTopRight.Location = new System.Drawing.Point(84, 19);
+            this.iButtonTextAlignTopRight.Name = "iButtonTextAlignTopRight";
+            this.iButtonTextAlignTopRight.Size = new System.Drawing.Size(33, 33);
+            this.iButtonTextAlignTopRight.TabIndex = 0;
+            this.iButtonTextAlignTopRight.TabStop = false;
+            this.iButtonTextAlignTopRight.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.iButtonTextAlignTopRight.UseVisualStyleBackColor = true;
+            this.iButtonTextAlignTopRight.Click += new System.EventHandler(this.ButtonTextAlignClick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(715, 427);
+            this.ClientSize = new System.Drawing.Size(710, 436);
+            this.Controls.Add(this.iGroupBoxTextAlign);
             this.Controls.Add(this.iButtonFontColor);
             this.Controls.Add(this.iButtonDeleteProfile);
             this.Controls.Add(this.iButtonNewProfile);
@@ -125,6 +260,7 @@
             this.Text = "Stream Deck Demo";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
+            this.iGroupBoxTextAlign.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +278,16 @@
         private System.Windows.Forms.Button iButtonDeleteProfile;
         private System.Windows.Forms.ColorDialog iColorDialog;
         private System.Windows.Forms.Button iButtonFontColor;
+        private System.Windows.Forms.GroupBox iGroupBoxTextAlign;
+        private System.Windows.Forms.Button iButtonTextAlignBottomLeft;
+        private System.Windows.Forms.Button iButtonTextAlignBottomCenter;
+        private System.Windows.Forms.Button iButtonTextAlignMiddleLeft;
+        private System.Windows.Forms.Button iButtonTextAlignMiddleCenter;
+        private System.Windows.Forms.Button iButtonTextAlignTopLeft;
+        private System.Windows.Forms.Button iButtonTextAlignTopCenter;
+        private System.Windows.Forms.Button iButtonTextAlignBottomRight;
+        private System.Windows.Forms.Button iButtonTextAlignMiddleRight;
+        private System.Windows.Forms.Button iButtonTextAlignTopRight;
     }
 }
 

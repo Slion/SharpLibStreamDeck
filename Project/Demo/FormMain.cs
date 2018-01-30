@@ -95,7 +95,7 @@ namespace StreamDeckDemo
             // Create table panel
             //
             iTableLayoutPanelStreamDeck = new TableLayoutPanel();
-            iTableLayoutPanelStreamDeck.Location = new Point(50, 50);
+            iTableLayoutPanelStreamDeck.Location = new Point(12, 50);
             iTableLayoutPanelStreamDeck.Margin = new Padding(0);
             int widthInPixels = iClient.ColumnCount * (iClient.KeyWidthInpixels + KKeyBordersInPixels);
             int heightInPixels = iClient.RowCount * (iClient.KeyHeightInpixels + KKeyBordersInPixels);
@@ -331,9 +331,41 @@ namespace StreamDeckDemo
         {
             iTextBoxKeyEditor.Text = aKey.Text;
             iTextBoxKeyEditor.Font = aKey.Font;
-            //iTextBoxKeyEditor.TextAlign = aKey.TextAlign;
+            SetTextAlignButton(aKey.TextAlign);
         }
 
+        void SetTextAlignButton(ContentAlignment aContentAlignment)
+        {
+            iButtonTextAlignTopLeft.BackColor = (aContentAlignment == ContentAlignment.TopLeft ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignTopCenter.BackColor = (aContentAlignment == ContentAlignment.TopCenter ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignTopRight.BackColor = (aContentAlignment == ContentAlignment.TopRight ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignMiddleLeft.BackColor = (aContentAlignment == ContentAlignment.MiddleLeft ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignMiddleCenter.BackColor = (aContentAlignment == ContentAlignment.MiddleCenter ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignMiddleRight.BackColor = (aContentAlignment == ContentAlignment.MiddleRight ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignBottomLeft.BackColor = (aContentAlignment == ContentAlignment.BottomLeft ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignBottomCenter.BackColor = (aContentAlignment == ContentAlignment.BottomCenter ? Color.LightBlue : Color.LightGray);
+            iButtonTextAlignBottomRight.BackColor = (aContentAlignment == ContentAlignment.BottomRight ? Color.LightBlue : Color.LightGray);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonTextAlignClick(object sender, EventArgs e)
+        {
+            iButtonSave.Focus(); // As we don't want focus on the button
+            ContentAlignment alignment = (sender as Button).TextAlign;
+            CurrentKey.TextAlign = alignment;
+            CurrentKeyLabel.TextAlign = alignment;
+            SetTextAlignButton(alignment);
+        }
+
+        /// <summary>
+        /// User is changing text of the current key.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iTextBoxKeyEditor_TextChanged(object sender, EventArgs e)
         {
             CurrentKey.Text = iTextBoxKeyEditor.Text;
@@ -356,19 +388,19 @@ namespace StreamDeckDemo
 
         private void iButtonFont_Click(object sender, EventArgs e)
         {
-            iFontDialog.ShowColor = true;
+            //iFontDialog.ShowColor = true;
             //fontDialog.ShowApply = true;
             iFontDialog.ShowEffects = true;
             iFontDialog.Font = CurrentKeyLabel.Font;
-            iFontDialog.Color = CurrentKeyLabel.ForeColor;
+            //iFontDialog.Color = CurrentKeyLabel.ForeColor;
 
             if (DlgBox.ShowDialog(iFontDialog) != DialogResult.Cancel)
             {
                 //Save font settings
                 CurrentKeyLabel.Font = iFontDialog.Font;
                 CurrentKey.Font = iFontDialog.Font;
-                CurrentKeyLabel.ForeColor = iFontDialog.Color;
-                CurrentKey.FontColor = iFontDialog.Color;
+                //CurrentKeyLabel.ForeColor = iFontDialog.Color;
+                //CurrentKey.FontColor = iFontDialog.Color;
 
                 iTextBoxKeyEditor.Font = iFontDialog.Font;
                 
@@ -376,9 +408,23 @@ namespace StreamDeckDemo
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iButtonFontColor_Click(object sender, EventArgs e)
         {
+            iColorDialog.Color = CurrentKeyLabel.ForeColor;
 
+            if (DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
+            {
+                //Save font settings
+                CurrentKeyLabel.ForeColor = iColorDialog.Color;
+                CurrentKey.FontColor = iColorDialog.Color;
+                //
+                SaveModelAndReload();
+            }
         }
 
         private void iButtonNewProfile_Click(object sender, EventArgs e)
@@ -425,6 +471,7 @@ namespace StreamDeckDemo
         {
             iCurrentProfileIndex = iComboBoxProfiles.SelectedIndex;
             LoadCurrentProfile();
+            EditCurrentKey();
         }
 
         void LoadCurrentProfile()
@@ -433,11 +480,20 @@ namespace StreamDeckDemo
             UploadAllKeys(); 
         }
 
+        /// <summary>
+        /// User is editing current profile name.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void iComboBoxProfiles_TextUpdate(object sender, EventArgs e)
         {
             CurrentProfile.Name = iComboBoxProfiles.Text;
         }
 
+
+        /// <summary>
+        /// Render and upload all keys from the current profile.
+        /// </summary>
         void UploadAllKeys()
         {
             for (int i = 0; i < StreamDeck.Client.numOfKeys; i++)
@@ -447,7 +503,7 @@ namespace StreamDeckDemo
         }
 
         /// <summary>
-        /// 
+        /// Render and upload a key bitmap to our Stream Deck device.
         /// </summary>
         /// <param name="aIndex"></param>
         void UploadKey(int aIndex)
@@ -467,5 +523,6 @@ namespace StreamDeckDemo
             // We had to delay this otherwise labels would not be rendered
             iComboBoxProfiles.SelectedIndex = 0;
         }
+
     }
 }
