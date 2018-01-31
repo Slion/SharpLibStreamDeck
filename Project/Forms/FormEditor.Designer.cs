@@ -13,6 +13,8 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            DoDispose();
+
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -294,7 +296,7 @@
             // 
             // iTrackBarBrightness
             // 
-            this.iTrackBarBrightness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.iTrackBarBrightness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.iTrackBarBrightness.Cursor = System.Windows.Forms.Cursors.Default;
             this.iTrackBarBrightness.Location = new System.Drawing.Point(12, 39);
@@ -307,7 +309,7 @@
             this.iTrackBarBrightness.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.iTrackBarBrightness.Scroll += new System.EventHandler(this.iTrackBarBrightness_Scroll);
             // 
-            // FormMain
+            // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -325,9 +327,8 @@
             this.Controls.Add(this.iButtonSave);
             this.Controls.Add(this.iTextBoxKeyEditor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "FormMain";
+            this.Name = "FormEditor";
             this.Text = "Stream Deck Demo";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.iGroupBoxTextAlign.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).EndInit();

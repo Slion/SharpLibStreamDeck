@@ -164,8 +164,10 @@ namespace SharpLib.StreamDeck
             iTableLayoutPanelStreamDeck.Controls.Add(label, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
         }
 
-
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        private void DoDispose()
         {
             SaveModel();
             iClient.Dispose();
@@ -573,5 +575,6 @@ namespace SharpLib.StreamDeck
             // Save it into our profile
             CurrentProfile.Brightness = (byte)iTrackBarBrightness.Value;
         }
+
     }
 }
