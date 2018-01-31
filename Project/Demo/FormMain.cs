@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using StreamDeck = SharpLib.StreamDeck;
 using System.Configuration;
 using System.Runtime.Serialization;
-using CodeProject.Dialog;
 
 namespace StreamDeckDemo
 {

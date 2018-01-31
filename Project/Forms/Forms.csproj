@@ -29,6 +29,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpLibForms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpLibForms.0.0.1\lib\net461\SharpLibForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -42,8 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CbtHook.cs" />
-    <Compile Include="DialogBox.cs" />
     <Compile Include="FormEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,9 +56,6 @@
       <DependentUpon>Label.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Win32API.cs" />
-    <Compile Include="WindowsHook.cs" />
-    <Compile Include="WndProcRetHook.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +68,9 @@
       <Project>{d06ab787-766e-4b28-89c4-8d948070eb1c}</Project>
       <Name>SharpLibStreamDeck</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

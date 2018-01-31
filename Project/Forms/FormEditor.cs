@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using StreamDeck = SharpLib.StreamDeck;
 using System.Configuration;
 using System.Runtime.Serialization;
-using CodeProject.Dialog;
+
 
 namespace SharpLib.StreamDeck
 {
@@ -389,7 +389,7 @@ namespace SharpLib.StreamDeck
             iFontDialog.ShowEffects = true;
             iFontDialog.Font = CurrentKeyLabel.Font;
 
-            if (DlgBox.ShowDialog(iFontDialog) != DialogResult.Cancel)
+            if (Forms.DlgBox.ShowDialog(iFontDialog) != DialogResult.Cancel)
             {
                 //Apply new font to key label
                 CurrentKeyLabel.Font = iFontDialog.Font;
@@ -411,7 +411,7 @@ namespace SharpLib.StreamDeck
         {
             iColorDialog.Color = CurrentKeyLabel.ForeColor;
 
-            if (DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
+            if (Forms.DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
             {
                 //Save font settings
                 CurrentKeyLabel.ForeColor = iColorDialog.Color;
@@ -425,7 +425,7 @@ namespace SharpLib.StreamDeck
         {
             iColorDialog.Color = CurrentKeyLabel.OutlineColor;
 
-            if (DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
+            if (Forms.DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
             {
                 //Save font settings
                 CurrentKeyLabel.OutlineColor = iColorDialog.Color;
@@ -439,7 +439,7 @@ namespace SharpLib.StreamDeck
         private void iButtonBitmapColor_Click(object sender, EventArgs e)
         {
 
-            if (DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
+            if (Forms.DlgBox.ShowDialog(iColorDialog) != DialogResult.Cancel)
             {
                 //Save font settings                
                 CurrentKey.FillBitmap(iColorDialog.Color);
