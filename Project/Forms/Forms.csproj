@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{171B536B-0E62-476E-9130-8D14A841EDC0}</ProjectGuid>
+    <ProjectGuid>{C11B0D9F-9CEC-4B49-98AB-77ACDB99256C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SharpLib.StreamDeck</RootNamespace>
     <AssemblyName>SharpLibStreamDeckLabel</AssemblyName>
