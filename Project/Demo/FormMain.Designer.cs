@@ -60,10 +60,10 @@
             // iTextBoxKeyEditor
             // 
             this.iTextBoxKeyEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iTextBoxKeyEditor.Location = new System.Drawing.Point(511, 288);
+            this.iTextBoxKeyEditor.Location = new System.Drawing.Point(546, 312);
             this.iTextBoxKeyEditor.Multiline = true;
             this.iTextBoxKeyEditor.Name = "iTextBoxKeyEditor";
-            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(191, 76);
+            this.iTextBoxKeyEditor.Size = new System.Drawing.Size(156, 76);
             this.iTextBoxKeyEditor.TabIndex = 0;
             this.iTextBoxKeyEditor.TextChanged += new System.EventHandler(this.iTextBoxKeyEditor_TextChanged);
             // 
@@ -81,7 +81,7 @@
             // iButtonFont
             // 
             this.iButtonFont.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonFont.Location = new System.Drawing.Point(627, 370);
+            this.iButtonFont.Location = new System.Drawing.Point(627, 394);
             this.iButtonFont.Name = "iButtonFont";
             this.iButtonFont.Size = new System.Drawing.Size(75, 23);
             this.iButtonFont.TabIndex = 2;
@@ -124,7 +124,7 @@
             // iButtonFontColor
             // 
             this.iButtonFontColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonFontColor.Location = new System.Drawing.Point(627, 399);
+            this.iButtonFontColor.Location = new System.Drawing.Point(627, 423);
             this.iButtonFontColor.Name = "iButtonFontColor";
             this.iButtonFontColor.Size = new System.Drawing.Size(75, 23);
             this.iButtonFontColor.TabIndex = 7;
@@ -144,7 +144,7 @@
             this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignBottomRight);
             this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignMiddleRight);
             this.iGroupBoxTextAlign.Controls.Add(this.iButtonTextAlignTopRight);
-            this.iGroupBoxTextAlign.Location = new System.Drawing.Point(572, 143);
+            this.iGroupBoxTextAlign.Location = new System.Drawing.Point(572, 167);
             this.iGroupBoxTextAlign.Name = "iGroupBoxTextAlign";
             this.iGroupBoxTextAlign.Size = new System.Drawing.Size(126, 139);
             this.iGroupBoxTextAlign.TabIndex = 8;
@@ -252,7 +252,7 @@
             // iButtonBitmapColor
             // 
             this.iButtonBitmapColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonBitmapColor.Location = new System.Drawing.Point(430, 399);
+            this.iButtonBitmapColor.Location = new System.Drawing.Point(430, 423);
             this.iButtonBitmapColor.Name = "iButtonBitmapColor";
             this.iButtonBitmapColor.Size = new System.Drawing.Size(110, 23);
             this.iButtonBitmapColor.TabIndex = 9;
@@ -263,7 +263,7 @@
             // iButtonOutlineColor
             // 
             this.iButtonOutlineColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonOutlineColor.Location = new System.Drawing.Point(546, 399);
+            this.iButtonOutlineColor.Location = new System.Drawing.Point(546, 423);
             this.iButtonOutlineColor.Name = "iButtonOutlineColor";
             this.iButtonOutlineColor.Size = new System.Drawing.Size(75, 23);
             this.iButtonOutlineColor.TabIndex = 10;
@@ -273,6 +273,7 @@
             // 
             // iNumericOutlineThickness
             // 
+            this.iNumericOutlineThickness.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.iNumericOutlineThickness.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.iNumericOutlineThickness.DecimalPlaces = 1;
             this.iNumericOutlineThickness.Increment = new decimal(new int[] {
@@ -280,7 +281,7 @@
             0,
             0,
             65536});
-            this.iNumericOutlineThickness.Location = new System.Drawing.Point(546, 371);
+            this.iNumericOutlineThickness.Location = new System.Drawing.Point(546, 394);
             this.iNumericOutlineThickness.Maximum = new decimal(new int[] {
             5,
             0,
@@ -293,12 +294,14 @@
             // 
             // iTrackBarBrightness
             // 
+            this.iTrackBarBrightness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.iTrackBarBrightness.Cursor = System.Windows.Forms.Cursors.Default;
-            this.iTrackBarBrightness.Location = new System.Drawing.Point(511, 22);
+            this.iTrackBarBrightness.Location = new System.Drawing.Point(12, 39);
             this.iTrackBarBrightness.Maximum = 100;
             this.iTrackBarBrightness.Name = "iTrackBarBrightness";
             this.iTrackBarBrightness.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.iTrackBarBrightness.Size = new System.Drawing.Size(45, 260);
+            this.iTrackBarBrightness.Size = new System.Drawing.Size(45, 378);
             this.iTrackBarBrightness.TabIndex = 12;
             this.iTrackBarBrightness.TickFrequency = 5;
             this.iTrackBarBrightness.TickStyle = System.Windows.Forms.TickStyle.Both;

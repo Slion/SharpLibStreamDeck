@@ -95,7 +95,7 @@ namespace StreamDeckDemo
             // Create table panel
             //
             iTableLayoutPanelStreamDeck = new TableLayoutPanel();
-            iTableLayoutPanelStreamDeck.Location = new Point(12, 50);
+            iTableLayoutPanelStreamDeck.Location = new Point(62, 50);
             iTableLayoutPanelStreamDeck.Margin = new Padding(0);
             int widthInPixels = iClient.ColumnCount * (iClient.KeyWidthInpixels + KKeyBordersInPixels);
             int heightInPixels = iClient.RowCount * (iClient.KeyHeightInpixels + KKeyBordersInPixels);
@@ -328,11 +328,11 @@ namespace StreamDeckDemo
         {
             iTextBoxKeyEditor.Text = aKey.Text;
             iTextBoxKeyEditor.Font = aKey.Font;
-            SetTextAlignButton(aKey.TextAlign);
+            SetupTextAlignButtons(aKey.TextAlign);
             iNumericOutlineThickness.Value = Convert.ToDecimal(aKey.OutlineThickness);
         }
 
-        void SetTextAlignButton(ContentAlignment aContentAlignment)
+        void SetupTextAlignButtons(ContentAlignment aContentAlignment)
         {
             iButtonTextAlignTopLeft.BackColor = (aContentAlignment == ContentAlignment.TopLeft ? Color.LightBlue : Color.LightGray);
             iButtonTextAlignTopCenter.BackColor = (aContentAlignment == ContentAlignment.TopCenter ? Color.LightBlue : Color.LightGray);
@@ -356,7 +356,7 @@ namespace StreamDeckDemo
             ContentAlignment alignment = (sender as Button).TextAlign;
             CurrentKey.TextAlign = alignment;
             CurrentKeyLabel.TextAlign = alignment;
-            SetTextAlignButton(alignment);
+            SetupTextAlignButtons(alignment);
         }
 
         /// <summary>
