@@ -20,7 +20,7 @@ namespace SharpLib.StreamDeck
     public partial class FormEditor : Form
     {
         StreamDeck.Client iClient;
-        StreamDeck.Model iStreamDeckModel;
+        StreamDeck.Model iModel;
 
         int iCurrentProfileIndex = 0;
         int iCurrentKeyIndex = 0;
@@ -45,11 +45,11 @@ namespace SharpLib.StreamDeck
             }
 
             LoadModel();
-            if (iStreamDeckModel == null)
+            if (iModel == null)
             {
                 // Create a default model
-                iStreamDeckModel = new StreamDeck.Model();
-                iStreamDeckModel.Construct();
+                iModel = new StreamDeck.Model();
+                iModel.Construct();
             }
 
             PopulateProfiles();            
@@ -216,7 +216,7 @@ namespace SharpLib.StreamDeck
                 StreamDeck.Label ctrl = sender as StreamDeck.Label;
                 iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(ctrl);
                 // Store the bitmap in our model bitmap in our model
-                iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex].Bitmap = bmp;
+                iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex].Bitmap = bmp;
                 UploadKey(iCurrentKeyIndex);
                 EditCurrentKey();
                                               
@@ -281,7 +281,7 @@ namespace SharpLib.StreamDeck
             //using (FileStream fs = File.Open(destFile, FileMode.Create))
             {
                 Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
-                s.WriteObject(fs, iStreamDeckModel);
+                s.WriteObject(fs, iModel);
             }
 
         }
@@ -298,7 +298,7 @@ namespace SharpLib.StreamDeck
                 //using (FileStream fs = File.Open(destFile, FileMode.Create))
                 {
                     Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
-                    iStreamDeckModel = (StreamDeck.Model)s.ReadObject(fs);
+                    iModel = (StreamDeck.Model)s.ReadObject(fs);
                 }
             }
             catch
@@ -313,12 +313,12 @@ namespace SharpLib.StreamDeck
         /// </summary>
         void EditCurrentKey()
         {
-            LoadKeyInEditor(iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]);
+            LoadKeyInEditor(iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]);
         }
 
-        StreamDeck.Key CurrentKey { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
+        StreamDeck.Key CurrentKey { get { return iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
         StreamDeck.Label CurrentKeyLabel { get { return iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex] as StreamDeck.Label; } }
-        StreamDeck.Profile CurrentProfile { get { return iStreamDeckModel.Profiles[iCurrentProfileIndex]; } }
+        StreamDeck.Profile CurrentProfile { get { return iModel.Profiles[iCurrentProfileIndex]; } }
 
         /// <summary>
         /// 
@@ -386,20 +386,16 @@ namespace SharpLib.StreamDeck
 
         private void iButtonFont_Click(object sender, EventArgs e)
         {
-            //iFontDialog.ShowColor = true;
-            //fontDialog.ShowApply = true;
             iFontDialog.ShowEffects = true;
             iFontDialog.Font = CurrentKeyLabel.Font;
-            //iFontDialog.Color = CurrentKeyLabel.ForeColor;
 
             if (DlgBox.ShowDialog(iFontDialog) != DialogResult.Cancel)
             {
-                //Save font settings
+                //Apply new font to key label
                 CurrentKeyLabel.Font = iFontDialog.Font;
+                //Apply new font to model
                 CurrentKey.Font = iFontDialog.Font;
-                //CurrentKeyLabel.ForeColor = iFontDialog.Color;
-                //CurrentKey.FontColor = iFontDialog.Color;
-
+                //Apply new font to label editor
                 iTextBoxKeyEditor.Font = iFontDialog.Font;
                 
                 SaveModelAndReload();
@@ -464,11 +460,11 @@ namespace SharpLib.StreamDeck
 
         void DeleteCurrentProfile()
         {
-            iStreamDeckModel.Profiles.Remove(CurrentProfile);
+            iModel.Profiles.Remove(CurrentProfile);
             // Create default profile if none present
-            if (iStreamDeckModel.Profiles.Count==0)
+            if (iModel.Profiles.Count==0)
             {
-                iStreamDeckModel.CreateDefaultProfile();
+                iModel.CreateDefaultProfile();
             }
 
             iCurrentProfileIndex = 0;
@@ -479,8 +475,8 @@ namespace SharpLib.StreamDeck
         {
             StreamDeck.Profile profile = new StreamDeck.Profile();
             profile.Construct();            
-            iStreamDeckModel.Profiles.Add(profile);
-            profile.Name = "Profile " + iStreamDeckModel.Profiles.Count.ToString();
+            iModel.Profiles.Add(profile);
+            profile.Name = "Profile " + iModel.Profiles.Count.ToString();
             PopulateProfiles();
             iComboBoxProfiles.SelectedItem = profile.Name;
         }
@@ -488,7 +484,7 @@ namespace SharpLib.StreamDeck
         void PopulateProfiles()
         {
             iComboBoxProfiles.Items.Clear();
-            foreach (StreamDeck.Profile profile in iStreamDeckModel.Profiles)
+            foreach (StreamDeck.Profile profile in iModel.Profiles)
             {
                 iComboBoxProfiles.Items.Add(profile.Name);
             }
