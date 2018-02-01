@@ -54,6 +54,7 @@
             this.iButtonOutlineColor = new System.Windows.Forms.Button();
             this.iNumericOutlineThickness = new System.Windows.Forms.NumericUpDown();
             this.iTrackBarBrightness = new System.Windows.Forms.TrackBar();
+            this.iButtonApplyToAll = new System.Windows.Forms.Button();
             this.iGroupBoxTextAlign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iTrackBarBrightness)).BeginInit();
@@ -309,11 +310,23 @@
             this.iTrackBarBrightness.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.iTrackBarBrightness.Scroll += new System.EventHandler(this.iTrackBarBrightness_Scroll);
             // 
+            // iButtonApplyToAll
+            // 
+            this.iButtonApplyToAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iButtonApplyToAll.Location = new System.Drawing.Point(349, 423);
+            this.iButtonApplyToAll.Name = "iButtonApplyToAll";
+            this.iButtonApplyToAll.Size = new System.Drawing.Size(75, 23);
+            this.iButtonApplyToAll.TabIndex = 13;
+            this.iButtonApplyToAll.Text = "Apply To All";
+            this.iButtonApplyToAll.UseVisualStyleBackColor = true;
+            this.iButtonApplyToAll.Click += new System.EventHandler(this.iButtonApplyToAll_Click);
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 458);
+            this.Controls.Add(this.iButtonApplyToAll);
             this.Controls.Add(this.iTrackBarBrightness);
             this.Controls.Add(this.iNumericOutlineThickness);
             this.Controls.Add(this.iButtonOutlineColor);
@@ -364,6 +377,7 @@
         private System.Windows.Forms.Button iButtonOutlineColor;
         private System.Windows.Forms.NumericUpDown iNumericOutlineThickness;
         private System.Windows.Forms.TrackBar iTrackBarBrightness;
+        private System.Windows.Forms.Button iButtonApplyToAll;
     }
 }
 

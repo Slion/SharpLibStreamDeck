@@ -11,11 +11,8 @@ namespace SharpLib.StreamDeck
     [DataContract]
     public class Key
     {
-        //[DataMember]
-        //public int Id;
-
         [DataMember]
-        public Bitmap Bitmap;
+        public string EventName;
 
         [DataMember]
         public string Text;
@@ -36,7 +33,7 @@ namespace SharpLib.StreamDeck
         public float OutlineThickness { get; set; }
 
         [DataMember]
-        public string EventName;
+        public Bitmap Bitmap;
 
         public void Construct()
         {
@@ -98,6 +95,21 @@ namespace SharpLib.StreamDeck
                 FontConverter cvt = new FontConverter();
                 FontName = cvt.ConvertToInvariantString(value);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aKey"></param>
+        public void CopyStyle(Key aKey)
+        {
+            TextAlign = aKey.TextAlign;
+            FontName = aKey.FontName;
+            FontColor = aKey.FontColor;
+            OutlineColor = aKey.OutlineColor;
+            OutlineThickness = aKey.OutlineThickness;
+            Bitmap = (Bitmap)aKey.Bitmap.Clone();
+            Font = (Font)aKey.Font.Clone();            
         }
     }
 }

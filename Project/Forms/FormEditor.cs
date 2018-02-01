@@ -599,5 +599,18 @@ namespace SharpLib.StreamDeck
             CurrentProfile.Brightness = (byte)iTrackBarBrightness.Value;
         }
 
+        private void iButtonApplyToAll_Click(object sender, EventArgs e)
+        {
+            //Copy current key style to all keys
+            foreach (Key key in CurrentProfile.Keys)
+            {
+                if (key != CurrentKey)
+                {
+                    key.CopyStyle(CurrentKey);
+                }
+            }
+
+            SaveModelAndReload();
+        }
     }
 }
