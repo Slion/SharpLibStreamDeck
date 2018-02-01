@@ -97,6 +97,7 @@ namespace SharpLib.StreamDeck
             iTableLayoutPanelStreamDeck = new TableLayoutPanel();
             iTableLayoutPanelStreamDeck.Location = new Point(62, 50);
             iTableLayoutPanelStreamDeck.Margin = new Padding(0);
+            iTableLayoutPanelStreamDeck.CellPaint += TableCellPaint;
             int widthInPixels = iClient.ColumnCount * (iClient.KeyWidthInpixels + KKeyBordersInPixels);
             int heightInPixels = iClient.RowCount * (iClient.KeyHeightInpixels + KKeyBordersInPixels);
             iTableLayoutPanelStreamDeck.Size = new Size(widthInPixels, heightInPixels);
@@ -125,34 +126,49 @@ namespace SharpLib.StreamDeck
         }
 
         /// <summary>
+        /// Used to draw a focus effect arround the Stream Deck key which is currently being edited.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TableCellPaint(object sender, TableLayoutCellPaintEventArgs e)
+        {
+            // Check if current key index matches this cell
+            if (iCurrentKeyIndex==iTableLayoutPanelStreamDeck.Controls.IndexOf(iTableLayoutPanelStreamDeck.GetControlFromPosition(e.Column, e.Row)))
+            {
+                e.Graphics.FillRectangle(Brushes.Black, e.CellBounds);
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="aColumn"></param>
         /// <param name="aRow"></param>
         private void CreateStreamDeckKeyControls(int aColumn, int aRow)
         {
-            int panelIndex = aColumn + iTableLayoutPanelStreamDeck.ColumnCount * aRow;
+            // Compute our key index, it matches hardware index and control index in table control collection
+            int keyIndex = aColumn + iTableLayoutPanelStreamDeck.ColumnCount * aRow;
 
             // 
             // Create label
             // 
             StreamDeck.Label label = new StreamDeck.Label();
             label.AllowDrop = true;
-            label.BackColor = System.Drawing.Color.Transparent;
-            label.Location = new System.Drawing.Point(0, 0);
+            label.BackColor = Color.Transparent;
+            label.Location = new Point(0, 0);
             label.Margin = new Padding(KKeyPaddingInPixels);
             //label.Name = "label1";
-            label.Size = new System.Drawing.Size(72, 72);
+            label.Size = new Size(Client.KKeyWidthInPixels, Client.KKeyHeightInPixels);
             //label.TabIndex = panelIndex;
             //label.TabStop = true;
             // Fetch our text from our model
-            label.Text = CurrentProfile.Keys[panelIndex].Text;
-            label.Font = CurrentProfile.Keys[panelIndex].Font;
-            label.TextAlign = CurrentProfile.Keys[panelIndex].TextAlign;
-            label.ForeColor = CurrentProfile.Keys[panelIndex].FontColor;
-            label.OutlineColor = CurrentProfile.Keys[panelIndex].OutlineColor;
-            label.OutlineThickness = CurrentProfile.Keys[panelIndex].OutlineThickness;
-            label.BackgroundImage = CurrentProfile.Keys[panelIndex].Bitmap;
+            label.Text = CurrentProfile.Keys[keyIndex].Text;
+            label.Font = CurrentProfile.Keys[keyIndex].Font;
+            label.TextAlign = CurrentProfile.Keys[keyIndex].TextAlign;
+            label.ForeColor = CurrentProfile.Keys[keyIndex].FontColor;
+            label.OutlineColor = CurrentProfile.Keys[keyIndex].OutlineColor;
+            label.OutlineThickness = CurrentProfile.Keys[keyIndex].OutlineThickness;
+            label.BackgroundImage = CurrentProfile.Keys[keyIndex].Bitmap;
             label.BackgroundImageLayout = ImageLayout.Stretch;
 
             // Hook in event handlers
@@ -244,6 +260,8 @@ namespace SharpLib.StreamDeck
             iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(sender as Label);
             // Load that key into our editor
             EditCurrentKey();
+            // Make sure we show our key cursor
+            iTableLayoutPanelStreamDeck.Invalidate();
         }
 
 
@@ -534,7 +552,7 @@ namespace SharpLib.StreamDeck
         /// </summary>
         void UploadAllKeys()
         {
-            for (int i = 0; i < StreamDeck.Client.numOfKeys; i++)
+            for (int i = 0; i < StreamDeck.Client.KKeyCount; i++)
             {
                 UploadKey(i);
             }

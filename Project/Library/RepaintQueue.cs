@@ -12,7 +12,7 @@ namespace SharpLib.StreamDeck
         }
 
         private readonly Queue<int> keyQueue = new Queue<int>();
-        private readonly KeyBitmapHolder[] keyIndex = new KeyBitmapHolder[Client.numOfKeys];
+        private readonly KeyBitmapHolder[] keyIndex = new KeyBitmapHolder[Client.KKeyCount];
         private readonly object listLock = new object();
         private readonly SemaphoreSlim waiter = new SemaphoreSlim(0);
 

@@ -89,7 +89,7 @@ namespace SharpLib.StreamDeck
 
         public static KeyBitmap FromDrawingBitmap(Bitmap bitmap)
         {
-            if (bitmap.Width != Client.iconSize || bitmap.Height != Client.iconSize) throw new NotSupportedException("Unsupported bitmap dimensions");
+            if (bitmap.Width != Client.KKeyWidthInPixels || bitmap.Height != Client.KKeyWidthInPixels) throw new NotSupportedException("Unsupported bitmap dimensions");
            
             BitmapData data = null;
             try
@@ -106,12 +106,12 @@ namespace SharpLib.StreamDeck
                     //copying 90% of the code ;-)
                     if (data.PixelFormat == PixelFormat.Format24bppRgb)
                     {
-                        for (int y = 0; y < Client.iconSize; y++)
+                        for (int y = 0; y < Client.KKeyWidthInPixels; y++)
                         {
-                            for (int x = 0; x < Client.iconSize; x++)
+                            for (int x = 0; x < Client.KKeyWidthInPixels; x++)
                             {
                                 var ps = data.Stride * y + x * 3;
-                                var pt = Client.iconSize * 3 * (y + 1) - (x + 1) * 3;
+                                var pt = Client.KKeyWidthInPixels * 3 * (y + 1) - (x + 1) * 3;
                                 managedRGB[pt + 0] = bdata[ps + 0];
                                 managedRGB[pt + 1] = bdata[ps + 1];
                                 managedRGB[pt + 2] = bdata[ps + 2];
@@ -120,12 +120,12 @@ namespace SharpLib.StreamDeck
                     }
                     else if (data.PixelFormat == PixelFormat.Format32bppArgb)
                     {
-                        for (int y = 0; y < Client.iconSize; y++)
+                        for (int y = 0; y < Client.KKeyWidthInPixels; y++)
                         {
-                            for (int x = 0; x < Client.iconSize; x++)
+                            for (int x = 0; x < Client.KKeyWidthInPixels; x++)
                             {
                                 var ps = data.Stride * y + x * 4;
-                                var pt = Client.iconSize * 3 * (y + 1) - (x + 1) * 3;
+                                var pt = Client.KKeyWidthInPixels * 3 * (y + 1) - (x + 1) * 3;
                                 double alpha = (double)bdata[ps + 3] / 255f;
                                 managedRGB[pt + 0] = (byte)Math.Round(bdata[ps + 0] * alpha);
                                 managedRGB[pt + 1] = (byte)Math.Round(bdata[ps + 1] * alpha);

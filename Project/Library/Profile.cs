@@ -26,7 +26,7 @@ namespace SharpLib.StreamDeck
                 Keys = new List<Key>();
                 
                 // Create our Keys
-                for (int i=0; i<Client.numOfKeys; i++)
+                for (int i=0; i<Client.KKeyCount; i++)
                 {
                     Key key = new Key();
                     key.Construct();

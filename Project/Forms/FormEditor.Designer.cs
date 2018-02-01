@@ -104,7 +104,7 @@
             // iButtonNewProfile
             // 
             this.iButtonNewProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonNewProfile.Location = new System.Drawing.Point(574, 22);
+            this.iButtonNewProfile.Location = new System.Drawing.Point(575, 10);
             this.iButtonNewProfile.Name = "iButtonNewProfile";
             this.iButtonNewProfile.Size = new System.Drawing.Size(127, 23);
             this.iButtonNewProfile.TabIndex = 5;
@@ -115,7 +115,7 @@
             // iButtonDeleteProfile
             // 
             this.iButtonDeleteProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.iButtonDeleteProfile.Location = new System.Drawing.Point(574, 50);
+            this.iButtonDeleteProfile.Location = new System.Drawing.Point(575, 39);
             this.iButtonDeleteProfile.Name = "iButtonDeleteProfile";
             this.iButtonDeleteProfile.Size = new System.Drawing.Size(127, 23);
             this.iButtonDeleteProfile.TabIndex = 6;

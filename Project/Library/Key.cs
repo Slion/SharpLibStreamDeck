@@ -42,7 +42,7 @@ namespace SharpLib.StreamDeck
         {
             if (Bitmap == null)
             {
-                Bitmap = new Bitmap(Client.iconSize, Client.iconSize);
+                Bitmap = new Bitmap(Client.KKeyWidthInPixels, Client.KKeyWidthInPixels);
                 FillBitmap(Brushes.Black);
                 FontColor = Color.White;
                 TextAlign = ContentAlignment.MiddleCenter;

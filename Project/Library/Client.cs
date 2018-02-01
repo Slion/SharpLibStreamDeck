@@ -16,11 +16,19 @@ using System.Threading.Tasks;
 
 namespace SharpLib.StreamDeck
 {
+
     /// <summary>
     /// A (very simple) .NET Wrapper for the StreamDeck HID
     /// </summary>
     public class Client : IDisposable
     {
+        // Assuming the following constants
+        public const int KKeyCount = 15; 
+        public const int KKeyWidthInPixels = 72;
+        public const int KKeyHeightInPixels = 72;
+        public const int KRowCount = 3;
+        public const int KColumnCount = 5;
+
 
         /// <summary>
         /// Open the first Stream Deck device we find.
@@ -58,11 +66,11 @@ namespace SharpLib.StreamDeck
         /// </summary>
         /// 
         /// TODO: Fetch this property from the device instead of having it hardcoded?
-        public int KeyCount { get { return numOfKeys; } }
-        public int RowCount { get { return 3; } }
-        public int ColumnCount { get { return 5; } }
-        public int KeyWidthInpixels { get { return 72; } }
-        public int KeyHeightInpixels { get { return 72; } }
+        public int KeyCount { get { return KKeyCount; } }
+        public int RowCount { get { return KRowCount; } }
+        public int ColumnCount { get { return KColumnCount; } }
+        public int KeyWidthInpixels { get { return KKeyWidthInPixels; } }
+        public int KeyHeightInpixels { get { return KKeyHeightInPixels; } }
 
         /// <summary>
         /// Is raised when a key is pressed
@@ -70,12 +78,10 @@ namespace SharpLib.StreamDeck
         public event EventHandler<KeyEventArgs> KeyPressed;
 
         private HidDevice iDevice;
-        private byte[] keyStates = new byte[numOfKeys];
+        private byte[] keyStates = new byte[KKeyCount];
         private volatile bool disposed = false;
 
-        public const int numOfKeys = 15; // TODO: remove that
-        internal const int iconSize = 72;  // TODO: remove that
-        internal const int rawBitmapDataLength = iconSize * iconSize * 3;
+        internal const int rawBitmapDataLength = KKeyWidthInPixels * KKeyWidthInPixels * 3;
         internal const int pagePacketSize = 8191;
         internal const int numFirstPagePixels = 2583;
         internal const int numSecondPagePixels = 2601;
@@ -110,7 +116,7 @@ namespace SharpLib.StreamDeck
         /// <summary>
         /// Size of the icon in pixels
         /// </summary>
-        public int IconSize { get => iconSize; }
+        public int IconSize { get => KKeyWidthInPixels; }
 
 
         /// <summary>
@@ -155,7 +161,7 @@ namespace SharpLib.StreamDeck
         public void SetKeyBitmap(int keyId, byte[] bitmapData)
         {
             VerifyNotDisposed();
-            if (bitmapData != null && bitmapData.Length != (iconSize * iconSize * 3)) throw new NotSupportedException();
+            if (bitmapData != null && bitmapData.Length != (KKeyWidthInPixels * KKeyWidthInPixels * 3)) throw new NotSupportedException();
             qqq.Enqueue(keyId, bitmapData);
         }
 
@@ -198,7 +204,7 @@ namespace SharpLib.StreamDeck
             if (!aDevice.IsOpen) throw new Exception("Device could not be opened");
             iDevice = aDevice;
 
-            for (int i = 0; i < numOfKeys; i++)
+            for (int i = 0; i < KKeyCount; i++)
             {
                 keyLocks[i] = new object();
             }
@@ -238,12 +244,12 @@ namespace SharpLib.StreamDeck
             _d.ReadReport(ReadCallback);
         }
 
-        private readonly object[] keyLocks = new object[numOfKeys];
+        private readonly object[] keyLocks = new object[KKeyCount];
 
 
         private void ProcessNewStates(byte[] newStates)
         {
-            for (int i = 0; i < numOfKeys; i++)
+            for (int i = 0; i < KKeyCount; i++)
             {
                 if (keyStates[i] != newStates[i])
                 {
