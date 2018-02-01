@@ -216,10 +216,15 @@ namespace SharpLib.StreamDeck
 
                 // Work out drop target key index and make it current
                 StreamDeck.Label ctrl = sender as StreamDeck.Label;
+                // Set target key as current
                 iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(ctrl);
-                // Store the bitmap in our model bitmap in our model
-                iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex].Bitmap = bmp;
+                // Update our UI
+                ctrl.BackgroundImage = bmp;
+                // Store the bitmap in our model
+                CurrentKey.Bitmap = bmp;
+                // Upload our key to Stream Deck
                 UploadKey(iCurrentKeyIndex);
+                // Load target key is editor
                 EditCurrentKey();
                                               
                 // Persist our modified model
