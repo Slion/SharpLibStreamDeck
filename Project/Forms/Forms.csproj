@@ -7,7 +7,7 @@
     <ProjectGuid>{C11B0D9F-9CEC-4B49-98AB-77ACDB99256C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SharpLib.StreamDeck</RootNamespace>
-    <AssemblyName>SharpLibStreamDeckLabel</AssemblyName>
+    <AssemblyName>SharpLibStreamDeckForms</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

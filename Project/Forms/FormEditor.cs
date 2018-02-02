@@ -175,6 +175,7 @@ namespace SharpLib.StreamDeck
             label.DragDrop += new DragEventHandler(KeyDragDrop);
             label.DragEnter += new DragEventHandler(KeyDragEnter);
             label.Click += new EventHandler(KeyClick);
+            label.MouseDown += new MouseEventHandler(KeyMouseDown);
 
             //
             iTableLayoutPanelStreamDeck.Controls.Add(label, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
@@ -191,6 +192,54 @@ namespace SharpLib.StreamDeck
         }
 
         /// <summary>
+        /// Fetch the key index corresponding to the give object.
+        /// </summary>
+        /// <param name="aObject"></param>
+        /// <returns></returns>
+        int KeyIndexForObject(object aObject)
+        {
+            return iTableLayoutPanelStreamDeck.Controls.IndexOf(aObject as Label);
+        }
+
+        /// <summary>
+        /// Fetch the key corresponding to the give object.
+        /// </summary>
+        /// <param name="aObject"></param>
+        /// <returns></returns>
+        Key KeyForObject(object aObject)
+        {
+            return CurrentProfile.Keys[KeyIndexForObject(aObject)];
+        }
+
+        /// <summary>
+        /// Fetch index for given key.
+        /// </summary>
+        /// <param name="aKey"></param>
+        /// <returns></returns>
+        int KexIndex(Key aKey)
+        {
+            return CurrentProfile.Keys.IndexOf(aKey);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KeyMouseDown(object sender, MouseEventArgs e)
+        {
+            // Workout the index of the key that was just clicked
+            iCurrentKeyIndex = KeyIndexForObject(sender);
+            // Load that key into our editor
+            EditCurrentKey();
+            // Make sure we show our key cursor
+            iTableLayoutPanelStreamDeck.Invalidate();
+
+            ((Label)sender).DoDragDrop(CurrentKey, DragDropEffects.Move);
+        }
+
+
+        /// <summary>
         /// Event triggered when the user drag some stuff over our control.
         /// </summary>
         /// <param name="sender"></param>
@@ -204,6 +253,12 @@ namespace SharpLib.StreamDeck
             {
                 // Supported payload set pointer cursor to "copy" type.
                 e.Effect = DragDropEffects.Copy;
+            }
+            else if (e.Data.GetDataPresent(typeof(Key)) 
+                // Make sure we are not trying to drop it on itself
+                && KeyForObject(sender) != e.Data.GetData(typeof(Key)) as Key)
+            {
+                e.Effect = DragDropEffects.Move;
             }
             else
             {
@@ -246,6 +301,22 @@ namespace SharpLib.StreamDeck
                 // Persist our modified model
                 SaveModel();
             }
+            else if (e.Data.GetDataPresent(typeof(Key)))
+            {
+                // We are dropping a key on another key
+                // Just swap them then
+                Key source = e.Data.GetData(typeof(Key)) as Key;
+                int sourceIndex = CurrentProfile.Keys.IndexOf(source);
+                int targetIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(sender as Label);
+                Key target = CurrentProfile.Keys[targetIndex];
+                // Swap target and source
+                CurrentProfile.Keys[targetIndex] = source;
+                CurrentProfile.Keys[sourceIndex] = target;
+
+                iCurrentKeyIndex = targetIndex;
+                SaveModelAndReload();
+                EditCurrentKey();
+            }
         }
 
 
@@ -256,12 +327,14 @@ namespace SharpLib.StreamDeck
         /// <param name="e"></param>
         private void KeyClick(object sender, EventArgs e)
         {
+            /*
             // Workout the index of the key that was just clicked
             iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(sender as Label);
             // Load that key into our editor
             EditCurrentKey();
             // Make sure we show our key cursor
             iTableLayoutPanelStreamDeck.Invalidate();
+            */
         }
 
 
