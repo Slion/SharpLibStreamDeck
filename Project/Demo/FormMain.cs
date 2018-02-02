@@ -28,10 +28,17 @@ namespace StreamDeckDemo
 
             // Embed our Stream Deck Editor Form
             iEditor = new StreamDeck.FormEditor();
+
+            iEditor.ComboBoxEvents.Items.Add("EventOne");
+            iEditor.ComboBoxEvents.Items.Add("EventTwo");
+            iEditor.ComboBoxEvents.Items.Add("EventThree");
+
             iEditor.Dock = DockStyle.Fill;
             iEditor.TopLevel = false;
             Controls.Add(iEditor);
             iEditor.Show();
+
+
 
         }
     }

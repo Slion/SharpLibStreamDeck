@@ -19,8 +19,8 @@ namespace SharpLib.StreamDeck
 {
     public partial class FormEditor : Form
     {
-        StreamDeck.Client iClient;
-        StreamDeck.Model iModel;
+        protected Client iClient;
+        protected Model iModel;
 
         int iCurrentProfileIndex = 0;
         int iCurrentKeyIndex = 0;
@@ -38,6 +38,8 @@ namespace SharpLib.StreamDeck
             try
             {
                 iClient.Open();
+                // Register handler
+                iClient.KeyPressed += StreamDeckKeyPressed;
             }
             catch
             {
@@ -52,8 +54,25 @@ namespace SharpLib.StreamDeck
                 iModel.Construct();
             }
 
-            PopulateProfiles();            
+            PopulateProfiles();
         }
+
+        /// <summary>
+        /// Provide access to events' combo box so that it can be filled by clients.
+        /// </summary>
+        public ComboBox ComboBoxEvents { get { return  iComboBoxEvents; } }
+            
+
+        /// <summary>
+        /// Derived class should use that.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public virtual void StreamDeckKeyPressed(object sender, KeyEventArgs e)
+        {
+
+        }
+
 
         /// <summary>
         /// Load current profile into our UI
@@ -241,6 +260,16 @@ namespace SharpLib.StreamDeck
         }
 
         /// <summary>
+        /// Provide access to a key at the given index.
+        /// </summary>
+        /// <param name="aIndex"></param>
+        /// <returns></returns>
+        protected Key KeyForIndex(int aIndex)
+        {
+            return CurrentProfile.Keys[aIndex];
+        }
+
+        /// <summary>
         /// Fetch index for given key.
         /// </summary>
         /// <param name="aKey"></param>
@@ -389,7 +418,7 @@ namespace SharpLib.StreamDeck
         /// <summary>
         /// 
         /// </summary>
-        private void SaveModel()
+        public virtual void SaveModel()
         {
             //string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             //destFile += ".streamdeck.xml";
@@ -407,7 +436,7 @@ namespace SharpLib.StreamDeck
         /// <summary>
         /// 
         /// </summary>
-        private void LoadModel()
+        public virtual void LoadModel()
         {
             try
             {
@@ -437,9 +466,9 @@ namespace SharpLib.StreamDeck
             iTableLayoutPanelStreamDeck.Invalidate();
         }
 
-        StreamDeck.Key CurrentKey { get { return iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
-        StreamDeck.Label CurrentKeyLabel { get { return iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex] as StreamDeck.Label; } }
-        StreamDeck.Profile CurrentProfile { get { return iModel.Profiles[iCurrentProfileIndex]; } }
+        Key CurrentKey { get { return iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
+        Label CurrentKeyLabel { get { return iTableLayoutPanelStreamDeck.Controls[iCurrentKeyIndex] as StreamDeck.Label; } }
+        protected Profile CurrentProfile { get { return iModel.Profiles[iCurrentProfileIndex]; } }
 
         /// <summary>
         /// 
@@ -449,6 +478,7 @@ namespace SharpLib.StreamDeck
         {
             iTextBoxKeyEditor.Text = aKey.Text;
             iTextBoxKeyEditor.Font = aKey.Font;
+            iComboBoxEvents.SelectedItem = aKey.EventName;
             SetupTextAlignButtons(aKey.TextAlign);
             iNumericOutlineThickness.Value = Convert.ToDecimal(aKey.OutlineThickness);
         }
@@ -709,7 +739,8 @@ namespace SharpLib.StreamDeck
             SaveModelAndReload();
         }
 
-        private void iComboBoxEvents_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void iComboBoxEvents_SelectionChangeCommitted(object sender, EventArgs e)
         {
             CurrentKey.EventName = iComboBoxEvents.Text;
             SaveModel();

@@ -4,12 +4,8 @@
 # SharpLibStreamDeck
 
 SharpLibStreamDeck is a .NET library to interface with [Elgato Gaming Stream Deck].
-This project is not related to _Elgato Systems GmbH_ in any way.
 
 ## Quickstart
-***At the moment only Windows is supported (tested with 10, should also work with 7 and 8)***
-1. Add StreamDeckSharp reference (via nuget or download latest release)
-2. Add a using directive for StreamDeckSharp: `using StreamDeckSharp;`
 
 I want to...              | Code (C#)
 ------------------------- | ---------------------------------------------------------
@@ -22,42 +18,30 @@ process key events        | `deck.KeyPressed += KeyHandler;`
 
 **Make sure to dispose the device reference correctly** _(use `using` whenever possible)_
 
-## Examples
-If you want to see some examples take a look at the example projects in the repo.  
-Here is a short example called "Austria". Copy the code and start hacking ;-)
+## Features
 
-```C#
-using SharpLib.StreamDeck;
+- Set Stream Deck brightness.
+- Display Elgato Gaming logo on Stream Deck.
+- Upload bitmaps to Stream Deck keys.
+- Receive key press up and down notifications from Stream Deck.
+- Provide Stream Deck serializable multi-profile Model. 
+- Provide Windows Classic Forms Stream Deck Model Editor:
+  - Drag & Drop image files onto keys.
+  - Drag & Drop keys to swap them.
+  - Apply current key style to every keys in current profile.
+  - Keys editor featuring:
+    - Text editor.
+    - Background color selection.
+    - Font selection.
+    - Font color selection.
+    - Font outline color selection.
+    - Font outline thickness selection.
+    - Event selection for consumer application to associate actions with keys.
 
-namespace StreamDeckSharp.Examples.Austria
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            //Create some color we use later to draw the flag of austria
-            var red = KeyBitmap.FromRGBColor(237, 41, 57);
-            var white = KeyBitmap.FromRGBColor(255, 255, 255);
-            var rowColors = new KeyBitmap[] { red, white, red };
-
-            //Open the Stream Deck device
-            using (var deck = SharpLib.StreamDeck.Client())
-            {
-                deck.Open();
-                deck.SetBrightness(100);
-
-                //Send the bitmap informaton to the device
-                for (int i = 0; i < deck.NumberOfKeys; i++)
-                    deck.SetKeyBitmap(i, rowColors[i / 5]);
-            }
-        }
-    }
-}
-```
-
-Here is what the "Rainbow" example looks like after pressing some keys
+## Rainbow Example
 
 ![Rainbow example photo](doc/images/rainbow_example.png?raw=true "Rainbow demo after pressing some keys")
+
 
 
 [Elgato Gaming Stream Deck]: https://www.elgato.com/de/gaming/stream-deck

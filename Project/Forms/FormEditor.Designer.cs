@@ -287,7 +287,7 @@
             0,
             0,
             65536});
-            this.iNumericOutlineThickness.Location = new System.Drawing.Point(546, 394);
+            this.iNumericOutlineThickness.Location = new System.Drawing.Point(547, 396);
             this.iNumericOutlineThickness.Maximum = new decimal(new int[] {
             5,
             0,
@@ -327,7 +327,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(445, 396);
+            this.label1.Location = new System.Drawing.Point(446, 398);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 13);
             this.label1.TabIndex = 14;
@@ -335,17 +335,18 @@
             // 
             // iComboBoxEvents
             // 
+            this.iComboBoxEvents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.iComboBoxEvents.FormattingEnabled = true;
-            this.iComboBoxEvents.Location = new System.Drawing.Point(572, 140);
+            this.iComboBoxEvents.Location = new System.Drawing.Point(546, 140);
             this.iComboBoxEvents.Name = "iComboBoxEvents";
-            this.iComboBoxEvents.Size = new System.Drawing.Size(130, 21);
+            this.iComboBoxEvents.Size = new System.Drawing.Size(156, 21);
             this.iComboBoxEvents.TabIndex = 15;
-            this.iComboBoxEvents.SelectedIndexChanged += new System.EventHandler(this.iComboBoxEvents_SelectedIndexChanged);
+            this.iComboBoxEvents.SelectionChangeCommitted += new System.EventHandler(this.iComboBoxEvents_SelectionChangeCommitted);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(528, 143);
+            this.label2.Location = new System.Drawing.Point(543, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 16;
