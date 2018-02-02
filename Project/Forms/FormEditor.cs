@@ -708,5 +708,11 @@ namespace SharpLib.StreamDeck
 
             SaveModelAndReload();
         }
+
+        private void iComboBoxEvents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CurrentKey.EventName = iComboBoxEvents.Text;
+            SaveModel();
+        }
     }
 }

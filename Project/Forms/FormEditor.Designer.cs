@@ -55,6 +55,9 @@
             this.iNumericOutlineThickness = new System.Windows.Forms.NumericUpDown();
             this.iTrackBarBrightness = new System.Windows.Forms.TrackBar();
             this.iButtonApplyToAll = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.iComboBoxEvents = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.iGroupBoxTextAlign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iTrackBarBrightness)).BeginInit();
@@ -321,11 +324,41 @@
             this.iButtonApplyToAll.UseVisualStyleBackColor = true;
             this.iButtonApplyToAll.Click += new System.EventHandler(this.iButtonApplyToAll_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(445, 396);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Outline Thickness:";
+            // 
+            // iComboBoxEvents
+            // 
+            this.iComboBoxEvents.FormattingEnabled = true;
+            this.iComboBoxEvents.Location = new System.Drawing.Point(572, 140);
+            this.iComboBoxEvents.Name = "iComboBoxEvents";
+            this.iComboBoxEvents.Size = new System.Drawing.Size(130, 21);
+            this.iComboBoxEvents.TabIndex = 15;
+            this.iComboBoxEvents.SelectedIndexChanged += new System.EventHandler(this.iComboBoxEvents_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(528, 143);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Event:";
+            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 458);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.iComboBoxEvents);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.iButtonApplyToAll);
             this.Controls.Add(this.iTrackBarBrightness);
             this.Controls.Add(this.iNumericOutlineThickness);
@@ -378,6 +411,9 @@
         private System.Windows.Forms.NumericUpDown iNumericOutlineThickness;
         private System.Windows.Forms.TrackBar iTrackBarBrightness;
         private System.Windows.Forms.Button iButtonApplyToAll;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox iComboBoxEvents;
+        private System.Windows.Forms.Label label2;
     }
 }
 

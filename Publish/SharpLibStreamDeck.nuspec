@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SharpLibStreamDeck</id>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
         <title>Elgato Gaming Stream Deck Library</title>
         <authors>Christian Wischenbart
 Stéphane Lenclud</authors>
@@ -11,16 +11,20 @@ Stéphane Lenclud</authors>
         <projectUrl>https://github.com/Slion/SharpLibStreamDeck</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Class library providing access to some Elgato Gaming Stream Deck functionalities.</description>
-        <releaseNotes />
+        <releaseNotes>v0.0.3
+Stream Deck Model.
+Windows Forms Editor.</releaseNotes>
         <copyright>Christian Wischenbart
 Stéphane Lenclud</copyright>
         <language />
         <tags>Elgato Gaming Stream Deck HID</tags>
         <dependencies>
             <dependency id="hidlibrary" version="3.2.46.0" />
+            <dependency id="SharpLibForms" version="0.0.3" />
         </dependencies>
     </metadata>
     <files>
         <file src="..\Project\Library\bin\Release\SharpLibStreamDeck.dll" target="lib\net461\SharpLibStreamDeck.dll" />
+        <file src="..\Project\Forms\bin\Release\SharpLibStreamDeckForms.dll" target="lib\net461\SharpLibStreamDeckForms.dll" />
     </files>
 </package>
