@@ -56,6 +56,26 @@ namespace SharpLib.StreamDeck
         }
 
         /// <summary>
+        /// Load current profile into our UI
+        /// </summary>
+        private void UpdateStreamDeckControls()
+        {
+            if (iTableLayoutPanelStreamDeck==null)
+            {
+                // First time around 
+                CreateStreamDeckControls();
+                return;
+            }
+
+            int i = 0;
+            foreach (Key key in CurrentProfile.Keys)
+            {
+                LoadKeyInLabel(key, iTableLayoutPanelStreamDeck.Controls[i]);
+                i++;
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         private void CreateStreamDeckControls()
@@ -139,6 +159,20 @@ namespace SharpLib.StreamDeck
             }
         }
 
+
+        private void LoadKeyInLabel(Key aKey, object aLabel)
+        {
+            Label label = aLabel as Label;
+
+            label.Text = aKey.Text;
+            label.Font = aKey.Font;
+            label.TextAlign = aKey.TextAlign;
+            label.ForeColor = aKey.FontColor;
+            label.OutlineColor = aKey.OutlineColor;
+            label.OutlineThickness = aKey.OutlineThickness;
+            label.BackgroundImage = aKey.Bitmap;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -157,25 +191,20 @@ namespace SharpLib.StreamDeck
             label.BackColor = Color.Transparent;
             label.Location = new Point(0, 0);
             label.Margin = new Padding(KKeyPaddingInPixels);
+            label.BackgroundImageLayout = ImageLayout.Stretch;
             //label.Name = "label1";
             label.Size = new Size(Client.KKeyWidthInPixels, Client.KKeyHeightInPixels);
             //label.TabIndex = panelIndex;
             //label.TabStop = true;
-            // Fetch our text from our model
-            label.Text = CurrentProfile.Keys[keyIndex].Text;
-            label.Font = CurrentProfile.Keys[keyIndex].Font;
-            label.TextAlign = CurrentProfile.Keys[keyIndex].TextAlign;
-            label.ForeColor = CurrentProfile.Keys[keyIndex].FontColor;
-            label.OutlineColor = CurrentProfile.Keys[keyIndex].OutlineColor;
-            label.OutlineThickness = CurrentProfile.Keys[keyIndex].OutlineThickness;
-            label.BackgroundImage = CurrentProfile.Keys[keyIndex].Bitmap;
-            label.BackgroundImageLayout = ImageLayout.Stretch;
 
             // Hook in event handlers
             label.DragDrop += new DragEventHandler(KeyDragDrop);
             label.DragEnter += new DragEventHandler(KeyDragEnter);
             label.Click += new EventHandler(KeyClick);
             label.MouseDown += new MouseEventHandler(KeyMouseDown);
+
+            // Push key model data into label control
+            LoadKeyInLabel(CurrentProfile.Keys[keyIndex], label);            
 
             //
             iTableLayoutPanelStreamDeck.Controls.Add(label, iTableLayoutPanelStreamDeck.ColumnCount - aColumn - 1, aRow);
@@ -598,7 +627,7 @@ namespace SharpLib.StreamDeck
             iTrackBarBrightness.Value = CurrentProfile.Brightness;
             iClient.SetBrightness(CurrentProfile.Brightness);
             // Update controls
-            CreateStreamDeckControls();
+            UpdateStreamDeckControls();
             // Upload keys to Stream Deck
             UploadAllKeys();
         }
