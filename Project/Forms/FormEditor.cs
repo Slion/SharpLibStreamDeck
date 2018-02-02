@@ -133,7 +133,7 @@ namespace SharpLib.StreamDeck
         private void TableCellPaint(object sender, TableLayoutCellPaintEventArgs e)
         {
             // Check if current key index matches this cell
-            if (iCurrentKeyIndex==iTableLayoutPanelStreamDeck.Controls.IndexOf(iTableLayoutPanelStreamDeck.GetControlFromPosition(e.Column, e.Row)))
+            if (iCurrentKeyIndex==KeyIndexForObject(iTableLayoutPanelStreamDeck.GetControlFromPosition(e.Column, e.Row)))
             {
                 e.Graphics.FillRectangle(Brushes.Black, e.CellBounds);
             }
@@ -232,8 +232,6 @@ namespace SharpLib.StreamDeck
             iCurrentKeyIndex = KeyIndexForObject(sender);
             // Load that key into our editor
             EditCurrentKey();
-            // Make sure we show our key cursor
-            iTableLayoutPanelStreamDeck.Invalidate();
 
             ((Label)sender).DoDragDrop(CurrentKey, DragDropEffects.Move);
         }
@@ -288,7 +286,7 @@ namespace SharpLib.StreamDeck
                 // Work out drop target key index and make it current
                 StreamDeck.Label ctrl = sender as StreamDeck.Label;
                 // Set target key as current
-                iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(ctrl);
+                iCurrentKeyIndex = KeyIndexForObject(ctrl);
                 // Update our UI
                 ctrl.BackgroundImage = bmp;
                 // Store the bitmap in our model
@@ -307,7 +305,7 @@ namespace SharpLib.StreamDeck
                 // Just swap them then
                 Key source = e.Data.GetData(typeof(Key)) as Key;
                 int sourceIndex = CurrentProfile.Keys.IndexOf(source);
-                int targetIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(sender as Label);
+                int targetIndex = KeyIndexForObject(sender);
                 Key target = CurrentProfile.Keys[targetIndex];
                 // Swap target and source
                 CurrentProfile.Keys[targetIndex] = source;
@@ -327,14 +325,7 @@ namespace SharpLib.StreamDeck
         /// <param name="e"></param>
         private void KeyClick(object sender, EventArgs e)
         {
-            /*
-            // Workout the index of the key that was just clicked
-            iCurrentKeyIndex = iTableLayoutPanelStreamDeck.Controls.IndexOf(sender as Label);
-            // Load that key into our editor
-            EditCurrentKey();
-            // Make sure we show our key cursor
-            iTableLayoutPanelStreamDeck.Invalidate();
-            */
+            // That's now being down on mouse down event
         }
 
 
@@ -412,6 +403,9 @@ namespace SharpLib.StreamDeck
         void EditCurrentKey()
         {
             LoadKeyInEditor(iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]);
+            // Make sure we show our current key highlight properly
+            // We will need to redraw our table then
+            iTableLayoutPanelStreamDeck.Invalidate();
         }
 
         StreamDeck.Key CurrentKey { get { return iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]; } }
