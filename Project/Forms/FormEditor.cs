@@ -22,6 +22,8 @@ namespace SharpLib.StreamDeck
         protected Client iClient;
         protected Model iModel;
 
+        string iModelFilename;
+
         int iCurrentProfileIndex = 0;
         int iCurrentKeyIndex = 0;
 
@@ -30,8 +32,10 @@ namespace SharpLib.StreamDeck
 
         private TableLayoutPanel iTableLayoutPanelStreamDeck;
 
-        public FormEditor()
+        public FormEditor(string aModelFilename = "stream-deck.xml")
         {
+            iModelFilename = aModelFilename;
+
             InitializeComponent();
 
             iClient = new StreamDeck.Client();
@@ -420,7 +424,7 @@ namespace SharpLib.StreamDeck
         /// </summary>
         public virtual void SaveModel()
         {
-            DoSaveModel("stream-deck.xml");
+            DoSaveModel(iModelFilename);
         }
 
         /// <summary>
@@ -444,7 +448,7 @@ namespace SharpLib.StreamDeck
         /// </summary>
         public virtual void LoadModel()
         {
-            DoLoadModel("stream-deck.xml");
+            DoLoadModel(iModelFilename);
         }
         
         /// <summary>
