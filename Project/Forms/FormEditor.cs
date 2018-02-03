@@ -420,17 +420,23 @@ namespace SharpLib.StreamDeck
         /// </summary>
         public virtual void SaveModel()
         {
+            DoSaveModel("stream-deck.xml");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aFilename"></param>
+        public void DoSaveModel(string aFilename)
+        {
             //string destFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             //destFile += ".streamdeck.xml";
             //
-            DataContractSerializer s = new DataContractSerializer(typeof(StreamDeck.Model));
-            using (FileStream fs = File.Open("stream-deck.xml", FileMode.Create))
-            //using (FileStream fs = File.Open(destFile, FileMode.Create))
+            DataContractSerializer s = new DataContractSerializer(typeof(Model));
+            using (FileStream fs = File.Open(aFilename, FileMode.Create))
             {
-                Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
                 s.WriteObject(fs, iModel);
             }
-
         }
 
         /// <summary>
@@ -438,21 +444,28 @@ namespace SharpLib.StreamDeck
         /// </summary>
         public virtual void LoadModel()
         {
+            DoLoadModel("stream-deck.xml");
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aFilename"></param>
+        public void DoLoadModel(string aFilename)
+        {
             try
             {
                 DataContractSerializer s = new DataContractSerializer(typeof(StreamDeck.Model));
-                using (FileStream fs = File.Open("stream-deck.xml", FileMode.Open))
+                using (FileStream fs = File.Open(aFilename, FileMode.Open))
                 //using (FileStream fs = File.Open(destFile, FileMode.Create))
                 {
-                    Console.WriteLine("Testing for type: {0}", typeof(StreamDeck.Model));
-                    iModel = (StreamDeck.Model)s.ReadObject(fs);
+                    iModel = (Model)s.ReadObject(fs);
                 }
             }
             catch
             {
-                Trace.WriteLine("WARNING: Could not load model");
+                Trace.WriteLine("WARNING: Could not load Stream Deck Model");
             }
-
         }
 
         /// <summary>

@@ -2,16 +2,19 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SharpLibStreamDeck</id>
-        <version>0.0.5</version>
+        <version>0.0.6</version>
         <title>Elgato Gaming Stream Deck Library</title>
-        <authors>Christian Wischenbart
-Stéphane Lenclud</authors>
+        <authors>Stéphane Lenclud
+Christian Wischenbart</authors>
         <owners>Stéphane Lenclud</owners>
         <licenseUrl>https://github.com/Slion/SharpLibStreamDeck/blob/master/LICENSE.md</licenseUrl>
         <projectUrl>https://github.com/Slion/SharpLibStreamDeck</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Class library providing access to some Elgato Gaming Stream Deck functionalities.</description>
-        <releaseNotes>v0.0.5
+        <releaseNotes>v0.0.6
+Making it easier for consumers to save model as XML.
+
+v0.0.5
 Fixing some editor controls anchors.
 
 v0.0.4
