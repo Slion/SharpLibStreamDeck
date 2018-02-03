@@ -379,7 +379,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormEditor";
             this.Text = "Stream Deck Demo";
-            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.iGroupBoxTextAlign.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iTrackBarBrightness)).EndInit();

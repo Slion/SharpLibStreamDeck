@@ -35,9 +35,13 @@ namespace StreamDeckDemo
 
             iEditor.Dock = DockStyle.Fill;
             iEditor.TopLevel = false;
-            Controls.Add(iEditor);
             iEditor.Show();
 
+            // Put it in secondary tab to test loading issue
+            tabPage2.Controls.Add(iEditor);
+
+            // Comment out the following if you want to test load issues in background tab
+            tabControl.SelectedTab = tabPage2;
 
 
         }

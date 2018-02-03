@@ -59,6 +59,10 @@ namespace SharpLib.StreamDeck
             }
 
             PopulateProfiles();
+
+            // Will trigger our first profile load and render
+            // See: iComboBoxProfiles_SelectedIndexChanged
+            iComboBoxProfiles.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -714,13 +718,6 @@ namespace SharpLib.StreamDeck
 
             // Upload our render
             iClient.SetKeyBitmap(aIndex, StreamDeck.KeyBitmap.FromDrawingBitmap(bitmap).CloneBitmapData());
-        }
-
-        private void FormMain_Shown(object sender, EventArgs e)
-        {
-            // Will trigger our first profile load and render
-            // We had to delay this otherwise labels would not be rendered
-            iComboBoxProfiles.SelectedIndex = 0;
         }
 
         /// <summary>
