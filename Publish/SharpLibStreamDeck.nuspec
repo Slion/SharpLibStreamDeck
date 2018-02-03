@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SharpLibStreamDeck</id>
-        <version>0.0.4</version>
+        <version>0.0.5</version>
         <title>Elgato Gaming Stream Deck Library</title>
         <authors>Christian Wischenbart
 Stéphane Lenclud</authors>
@@ -11,7 +11,10 @@ Stéphane Lenclud</authors>
         <projectUrl>https://github.com/Slion/SharpLibStreamDeck</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Class library providing access to some Elgato Gaming Stream Deck functionalities.</description>
-        <releaseNotes>v0.0.4
+        <releaseNotes>v0.0.5
+Fixing some editor controls anchors.
+
+v0.0.4
 Form editor save and load can be overridden.
 Form editor provides key press handler.
 Form editor provides access to events' combobox.

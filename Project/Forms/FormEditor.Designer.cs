@@ -326,6 +326,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(446, 398);
             this.label1.Name = "label1";
@@ -335,6 +336,7 @@
             // 
             // iComboBoxEvents
             // 
+            this.iComboBoxEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.iComboBoxEvents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.iComboBoxEvents.FormattingEnabled = true;
             this.iComboBoxEvents.Location = new System.Drawing.Point(546, 140);
@@ -345,6 +347,7 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(543, 124);
             this.label2.Name = "label2";
