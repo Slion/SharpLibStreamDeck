@@ -479,7 +479,7 @@ namespace SharpLib.StreamDeck
         /// <summary>
         /// 
         /// </summary>
-        void EditCurrentKey()
+        public void EditCurrentKey()
         {
             LoadKeyInEditor(iModel.Profiles[iCurrentProfileIndex].Keys[iCurrentKeyIndex]);
             // Make sure we show our current key highlight properly
