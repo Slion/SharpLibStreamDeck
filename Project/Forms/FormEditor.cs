@@ -68,8 +68,12 @@ namespace SharpLib.StreamDeck
         /// <summary>
         /// Provide access to events' combo box so that it can be filled by clients.
         /// </summary>
-        public ComboBox ComboBoxEvents { get { return  iComboBoxEvents; } }
-            
+        public ComboBox ComboBoxKeyDownEvent { get { return  iComboBoxKeyDownEvent; } }
+
+        /// <summary>
+        /// Provide access to events' combo box so that it can be filled by clients.
+        /// </summary>
+        public ComboBox ComboBoxKeyUpEvent { get { return iComboBoxKeyUpEvent; } }
 
         /// <summary>
         /// Derived class should use that.
@@ -499,7 +503,8 @@ namespace SharpLib.StreamDeck
         {
             iTextBoxKeyEditor.Text = aKey.Text;
             iTextBoxKeyEditor.Font = aKey.Font;
-            iComboBoxEvents.SelectedItem = aKey.EventName;
+            iComboBoxKeyDownEvent.SelectedItem = aKey.KeyDownEventName;
+            iComboBoxKeyUpEvent.SelectedItem = aKey.KeyUpEventName;
             SetupTextAlignButtons(aKey.TextAlign);
             iNumericOutlineThickness.Value = Convert.ToDecimal(aKey.OutlineThickness);
         }
@@ -754,9 +759,15 @@ namespace SharpLib.StreamDeck
         }
 
 
-        private void iComboBoxEvents_SelectionChangeCommitted(object sender, EventArgs e)
+        private void iComboBoxKeyDownEvent_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            CurrentKey.EventName = iComboBoxEvents.Text;
+            CurrentKey.KeyDownEventName = iComboBoxKeyDownEvent.Text;
+            SaveModel();
+        }
+
+        private void iComboBoxKeyUpEvent_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            CurrentKey.KeyUpEventName = iComboBoxKeyUpEvent.Text;
             SaveModel();
         }
     }

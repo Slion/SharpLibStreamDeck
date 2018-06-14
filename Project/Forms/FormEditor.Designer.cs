@@ -56,8 +56,10 @@
             this.iTrackBarBrightness = new System.Windows.Forms.TrackBar();
             this.iButtonApplyToAll = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.iComboBoxEvents = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.iComboBoxKeyDownEvent = new System.Windows.Forms.ComboBox();
+            this.iLabelKeyDownEvent = new System.Windows.Forms.Label();
+            this.iComboBoxKeyUpEvent = new System.Windows.Forms.ComboBox();
+            this.iLabelKeyUpEvent = new System.Windows.Forms.Label();
             this.iGroupBoxTextAlign.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iNumericOutlineThickness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iTrackBarBrightness)).BeginInit();
@@ -334,34 +336,57 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Outline Thickness:";
             // 
-            // iComboBoxEvents
+            // iComboBoxKeyDownEvent
             // 
-            this.iComboBoxEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.iComboBoxEvents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.iComboBoxEvents.FormattingEnabled = true;
-            this.iComboBoxEvents.Location = new System.Drawing.Point(546, 140);
-            this.iComboBoxEvents.Name = "iComboBoxEvents";
-            this.iComboBoxEvents.Size = new System.Drawing.Size(156, 21);
-            this.iComboBoxEvents.TabIndex = 15;
-            this.iComboBoxEvents.SelectionChangeCommitted += new System.EventHandler(this.iComboBoxEvents_SelectionChangeCommitted);
+            this.iComboBoxKeyDownEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iComboBoxKeyDownEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.iComboBoxKeyDownEvent.FormattingEnabled = true;
+            this.iComboBoxKeyDownEvent.Location = new System.Drawing.Point(547, 97);
+            this.iComboBoxKeyDownEvent.Name = "iComboBoxKeyDownEvent";
+            this.iComboBoxKeyDownEvent.Size = new System.Drawing.Size(156, 21);
+            this.iComboBoxKeyDownEvent.TabIndex = 15;
+            this.iComboBoxKeyDownEvent.SelectionChangeCommitted += new System.EventHandler(this.iComboBoxKeyDownEvent_SelectionChangeCommitted);
             // 
-            // label2
+            // iLabelKeyDownEvent
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(543, 124);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "Event:";
+            this.iLabelKeyDownEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iLabelKeyDownEvent.AutoSize = true;
+            this.iLabelKeyDownEvent.Location = new System.Drawing.Point(544, 81);
+            this.iLabelKeyDownEvent.Name = "iLabelKeyDownEvent";
+            this.iLabelKeyDownEvent.Size = new System.Drawing.Size(90, 13);
+            this.iLabelKeyDownEvent.TabIndex = 16;
+            this.iLabelKeyDownEvent.Text = "Key Down Event:";
+            // 
+            // iComboBoxKeyUpEvent
+            // 
+            this.iComboBoxKeyUpEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iComboBoxKeyUpEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.iComboBoxKeyUpEvent.FormattingEnabled = true;
+            this.iComboBoxKeyUpEvent.Location = new System.Drawing.Point(546, 140);
+            this.iComboBoxKeyUpEvent.Name = "iComboBoxKeyUpEvent";
+            this.iComboBoxKeyUpEvent.Size = new System.Drawing.Size(156, 21);
+            this.iComboBoxKeyUpEvent.TabIndex = 17;
+            this.iComboBoxKeyUpEvent.SelectionChangeCommitted += new System.EventHandler(this.iComboBoxKeyUpEvent_SelectionChangeCommitted);
+            // 
+            // iLabelKeyUpEvent
+            // 
+            this.iLabelKeyUpEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.iLabelKeyUpEvent.AutoSize = true;
+            this.iLabelKeyUpEvent.Location = new System.Drawing.Point(543, 124);
+            this.iLabelKeyUpEvent.Name = "iLabelKeyUpEvent";
+            this.iLabelKeyUpEvent.Size = new System.Drawing.Size(76, 13);
+            this.iLabelKeyUpEvent.TabIndex = 18;
+            this.iLabelKeyUpEvent.Text = "Key Up Event:";
             // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 458);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.iComboBoxEvents);
+            this.Controls.Add(this.iLabelKeyUpEvent);
+            this.Controls.Add(this.iComboBoxKeyUpEvent);
+            this.Controls.Add(this.iLabelKeyDownEvent);
+            this.Controls.Add(this.iComboBoxKeyDownEvent);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.iButtonApplyToAll);
             this.Controls.Add(this.iTrackBarBrightness);
@@ -415,8 +440,10 @@
         private System.Windows.Forms.TrackBar iTrackBarBrightness;
         private System.Windows.Forms.Button iButtonApplyToAll;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox iComboBoxEvents;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox iComboBoxKeyDownEvent;
+        private System.Windows.Forms.Label iLabelKeyDownEvent;
+        private System.Windows.Forms.ComboBox iComboBoxKeyUpEvent;
+        private System.Windows.Forms.Label iLabelKeyUpEvent;
     }
 }
 

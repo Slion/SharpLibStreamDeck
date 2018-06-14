@@ -12,7 +12,10 @@ namespace SharpLib.StreamDeck
     public class Key
     {
         [DataMember]
-        public string EventName;
+        public string KeyDownEventName;
+
+        [DataMember]
+        public string KeyUpEventName;
 
         [DataMember]
         public string Text;
